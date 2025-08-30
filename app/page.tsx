@@ -21,9 +21,10 @@ export default function Home() {
       try {
         const docs = await loadDocumentation()
         setDocumentation(docs)
-        // Set first item as default selection
-        if (docs.length > 0) {
-          setSelectedItem(docs[0])
+        // Set first item of selected version as default selection
+        const versionItem = docs.find(item => item.revitVersionId === `revit-${selectedVersion}`)
+        if (versionItem) {
+          setSelectedItem(versionItem)
         }
       } catch (error) {
         console.error('Failed to load documentation:', error)
@@ -35,12 +36,22 @@ export default function Home() {
     loadData()
   }, [])
 
+  // Update selected item when version changes
+  useEffect(() => {
+    if (documentation.length > 0) {
+      const versionItem = documentation.find(item => item.revitVersionId === `revit-${selectedVersion}`)
+      if (versionItem) {
+        setSelectedItem(versionItem)
+      }
+    }
+  }, [selectedVersion, documentation])
+
   const handleSearch = async (query: string) => {
     setSearchQuery(query)
     if (query.trim()) {
       // Filter documentation by selected version before searching
       const filteredDocs = documentation.filter(item => {
-        return item.revitVersionId === selectedVersion || 
+        return item.revitVersionId === `revit-${selectedVersion}` || 
                item.name.includes(`Revit ${selectedVersion}`) ||
                item.fullName?.includes(`${selectedVersion}`) ||
                item.assemblyName?.includes(`${selectedVersion}`)

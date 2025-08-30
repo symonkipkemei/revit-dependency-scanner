@@ -17,7 +17,7 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
   const filteredDocumentation = useMemo(() => {
     return documentation.filter(item => {
       // Check if item is for the selected Revit version
-      return item.revitVersionId === selectedVersion || 
+      return item.revitVersionId === `revit-${selectedVersion}` || 
              item.name.includes(`Revit ${selectedVersion}`) ||
              item.fullName?.includes(`${selectedVersion}`) ||
              item.assemblyName?.includes(`${selectedVersion}`)
