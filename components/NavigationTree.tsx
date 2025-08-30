@@ -163,7 +163,6 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
           }`}
           onClick={() => onSelectItem(item)}
         >
-          <span className="mr-3 text-lg">{getTypeIcon(item.type || 'unknown')}</span>
           <span className={`font-medium text-sm ${
             selectedItem?.id === item.id ? 'text-blue-700' : 'text-gray-900'
           }`}>
