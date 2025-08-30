@@ -11,9 +11,10 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
     return (
       <div className="flex items-center justify-center h-full text-gray-500">
         <div className="text-center">
-          <div className="text-6xl mb-4">📚</div>
-          <h2 className="text-xl font-semibold mb-2">Select an item to view documentation</h2>
-          <p>Use the navigation tree or search to find what you're looking for.</p>
+          <div className="text-6xl mb-4">🚧</div>
+          <h2 className="text-xl font-semibold mb-2">Revit 2025 Assembly Data</h2>
+          <p className="text-lg font-medium mb-1">Coming Soon</p>
+          <p className="text-sm">Assembly metadata for Revit 2025 will be available in a future update.</p>
         </div>
       </div>
     )

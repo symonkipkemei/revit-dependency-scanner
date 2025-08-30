@@ -32,56 +32,57 @@ export async function loadRevitVersions(): Promise<RevitVersion[]> {
 
 export async function loadDocumentation(): Promise<DocItem[]> {
   try {
-    // Load sample data for other versions first
-    const revitVersions = await loadRevitVersions()
-    const sampleData = convertToLegacyFormat(revitVersions)
+    // Load real assembly data for all available versions
+    const realData2021 = await loadRealAssemblyDataForVersion('2021')
+    const realData2022 = await loadRealAssemblyDataForVersion('2022')
+    const realData2023 = await loadRealAssemblyDataForVersion('2023')
+    const realData2024 = await loadRealAssemblyDataForVersion('2024')
     
-    // Load real Revit 2023 assembly data
-    const realAssemblyData = await loadRealAssemblyData()
-    
-    // Filter out sample Revit 2023 data and replace with real data
-    const filteredSampleData = sampleData.filter(item => item.revitVersionId !== 'revit-2023')
-    
-    // Combine real and sample data
-    return [...filteredSampleData, ...realAssemblyData]
+    // Combine all real data (no sample data for 2025)
+    return [...realData2021, ...realData2022, ...realData2023, ...realData2024]
   } catch (error) {
     console.error('Error loading documentation:', error)
     return []
   }
 }
 
-async function loadRealAssemblyData(): Promise<DocItem[]> {
+async function loadRealAssemblyDataForVersion(version: string): Promise<DocItem[]> {
   try {
-    const response = await fetch('/RevitAssemblyMetadata2023.json')
+    const response = await fetch(`/RevitAssemblyMetadata${version}.json`)
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+      console.warn(`No data file found for Revit ${version}`)
+      return []
     }
     const assemblies: RealAssemblyData[] = await response.json()
-    console.log(`Loaded ${assemblies.length} assemblies from real data`)
+    console.log(`Loaded ${assemblies.length} assemblies from Revit ${version} data`)
     
-    return convertRealAssemblyData(assemblies)
+    return convertRealAssemblyData(assemblies, version)
   } catch (error) {
-    console.error('Error loading real assembly data:', error)
+    console.error(`Error loading real assembly data for ${version}:`, error)
     return []
   }
 }
 
-function convertRealAssemblyData(assemblies: RealAssemblyData[]): DocItem[] {
+async function loadRealAssemblyData(): Promise<DocItem[]> {
+  return loadRealAssemblyDataForVersion('2023')
+}
+
+function convertRealAssemblyData(assemblies: RealAssemblyData[], version: string): DocItem[] {
   const docItems: DocItem[] = []
   
-  // Create Revit 2023 version item
-  const revit2023: DocItem = {
-    id: 'revit-2023-real',
-    name: 'Revit 2023',
-    fullName: 'Revit 2023',
-    assemblyName: 'Revit 2023',
-    version: '2023',
-    description: `Revit 2023 with ${assemblies.length} .NET assemblies analyzed`,
-    location: 'C:\\Program Files\\Autodesk\\Revit 2023\\',
+  // Create Revit version item
+  const revitVersion: DocItem = {
+    id: `revit-${version}-real`,
+    name: `Revit ${version}`,
+    fullName: `Revit ${version}`,
+    assemblyName: `Revit ${version}`,
+    version: version,
+    description: `Revit ${version} with ${assemblies.length} .NET assemblies analyzed`,
+    location: `C:\\Program Files\\Autodesk\\Revit ${version}\\`,
     type: 'autodesk',
-    revitVersionId: 'revit-2023-real'
+    revitVersionId: `revit-${version}-real`
   }
-  docItems.push(revit2023)
+  docItems.push(revitVersion)
   
   console.log(`Processing ${assemblies.length} assemblies...`)
   
@@ -102,7 +103,7 @@ function convertRealAssemblyData(assemblies: RealAssemblyData[]): DocItem[] {
                           assembly.PublicKeyToken !== ''
       
       const depItem: DocItem = {
-        id: `revit-2023-real-${index}`,
+        id: `revit-${version}-real-${index}`,
         name: assembly.Name,
         fullName: `${assembly.Name} v${assembly.Version}`,
         assemblyName: assembly.Name,
@@ -110,11 +111,11 @@ function convertRealAssemblyData(assemblies: RealAssemblyData[]): DocItem[] {
         description: `${fileName} - ${assembly.TargetFramework || 'Unknown framework'}`,
         location: assembly.FilePath,
         type: isThirdParty ? 'third-party' : 'autodesk',
-        revitVersionId: 'revit-2023',
-        parentId: 'revit-2023-real',
+        revitVersionId: `revit-${version}`,
+        parentId: `revit-${version}-real`,
         publicKeyToken: assembly.PublicKeyToken || undefined,
         recommendations: assembly.PublicKeyToken ? 
-          [`Use ${assembly.Name} ${assembly.Version} for Revit 2023 compatibility`] : 
+          [`Use ${assembly.Name} ${assembly.Version} for Revit ${version} compatibility`] : 
           [`${assembly.Name} is unsigned - consider version conflicts`],
         referencedAssemblies: assembly.ReferencedAssemblies?.map(ref => ({
           name: ref.Name,

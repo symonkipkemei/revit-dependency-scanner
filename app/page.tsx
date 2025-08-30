@@ -52,6 +52,9 @@ export default function Home() {
       )
       if (firstDependency) {
         setSelectedItem(firstDependency)
+      } else if (selectedVersion === '2025') {
+        // Show coming soon message for Revit 2025
+        setSelectedItem(null)
       }
     }
   }, [selectedVersion, documentation])
