@@ -7,17 +7,29 @@ interface NavigationTreeProps {
   documentation: DocItem[]
   onSelectItem: (item: DocItem) => void
   selectedItem: DocItem | null
+  selectedVersion: string
 }
 
-export default function NavigationTree({ documentation, onSelectItem, selectedItem }: NavigationTreeProps) {
+export default function NavigationTree({ documentation, onSelectItem, selectedItem, selectedVersion }: NavigationTreeProps) {
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set(['system']))
+
+  // Filter documentation by selected version
+  const filteredDocumentation = useMemo(() => {
+    return documentation.filter(item => {
+      // Check if item is for the selected Revit version
+      return item.revitVersionId === selectedVersion || 
+             item.name.includes(`Revit ${selectedVersion}`) ||
+             item.fullName?.includes(`${selectedVersion}`) ||
+             item.assemblyName?.includes(`${selectedVersion}`)
+    })
+  }, [documentation, selectedVersion])
 
   const navigationTree = useMemo(() => {
     const nodeMap = new Map<string, NavigationNode>()
     const rootNodes: NavigationNode[] = []
 
-    // Create nodes for all items
-    documentation.forEach(item => {
+    // Create nodes for filtered items
+    filteredDocumentation.forEach(item => {
       nodeMap.set(item.id, {
         item,
         children: [],
@@ -26,7 +38,7 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
     })
 
     // Build the tree structure
-    documentation.forEach(item => {
+    filteredDocumentation.forEach(item => {
       const node = nodeMap.get(item.id)!
       
       if (item.parentId) {
@@ -40,7 +52,7 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
     })
 
     return rootNodes
-  }, [documentation, expandedNodes])
+  }, [filteredDocumentation, expandedNodes])
 
   const toggleExpanded = (nodeId: string) => {
     setExpandedNodes(prev => {
