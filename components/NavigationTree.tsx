@@ -156,31 +156,19 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
       {filteredDependencies.map(item => (
         <div
           key={item.id}
-          className={`flex items-center px-2 py-1 cursor-pointer rounded-md mx-2 ${
+          className={`flex items-center px-4 py-3 cursor-pointer border-b border-gray-100 last:border-b-0 ${
             selectedItem?.id === item.id
-              ? 'bg-primary-100 text-primary-700 border border-primary-200'
-              : 'hover:bg-gray-100'
+              ? 'bg-blue-50 border-l-4 border-l-blue-500'
+              : 'hover:bg-gray-50'
           }`}
           onClick={() => onSelectItem(item)}
         >
-          <span className="mr-2 text-sm">{getTypeIcon(item.type || 'unknown')}</span>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center space-x-2">
-              <span className={`font-medium text-sm truncate ${
-                selectedItem?.id === item.id ? 'text-primary-700' : 'text-gray-900'
-              }`}>
-                {item.name}
-              </span>
-              <span className={`text-xs px-1.5 py-0.5 rounded ${getTypeColor(getItemType(item))} bg-gray-100`}>
-                {getItemType(item)}
-              </span>
-              {item.version && (
-                <span className="text-xs text-gray-500">
-                  v{item.version}
-                </span>
-              )}
-            </div>
-          </div>
+          <span className="mr-3 text-lg">{getTypeIcon(item.type || 'unknown')}</span>
+          <span className={`font-medium text-sm ${
+            selectedItem?.id === item.id ? 'text-blue-700' : 'text-gray-900'
+          }`}>
+            {item.name}.dll
+          </span>
         </div>
       ))}
     </div>
