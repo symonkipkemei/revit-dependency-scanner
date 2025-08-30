@@ -161,24 +161,30 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
         )}
 
         {/* Referenced Assemblies */}
-        {item.referencedAssemblies && item.referencedAssemblies.length > 0 && (
+        {isDependency(item) && (
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">🔗 Referenced Assemblies</h2>
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
               <div className="space-y-3">
-                {item.referencedAssemblies.map((ref, index) => (
-                  <div key={index} className="bg-white border border-gray-300 rounded p-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium text-gray-900">{ref.name}</span>
-                      <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
-                        v{ref.version}
-                      </span>
+                {item.referencedAssemblies && item.referencedAssemblies.length > 0 ? (
+                  item.referencedAssemblies.map((ref, index) => (
+                    <div key={index} className="bg-white border border-gray-300 rounded p-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-medium text-gray-900">{ref.name}</span>
+                        <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
+                          v{ref.version}
+                        </span>
+                      </div>
+                      <div className="text-xs text-gray-500 font-mono">
+                        PublicKeyToken: {ref.publicKeyToken || 'None'}
+                      </div>
                     </div>
-                    <div className="text-xs text-gray-500 font-mono">
-                      PublicKeyToken: {ref.publicKeyToken || 'None'}
-                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-4 text-gray-500">
+                    No referenced assemblies found
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </div>
