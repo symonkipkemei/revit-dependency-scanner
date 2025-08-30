@@ -1,5 +1,25 @@
 import { RevitVersion, RevitDependency, DocItem } from '@/types/documentation'
 
+interface RealAssemblyData {
+  FilePath: string
+  Name: string
+  Version: string
+  Culture: string
+  PublicKeyToken: string
+  ImageRuntimeVersion: string | null
+  TargetFramework: string | null
+  ReferencedAssemblies: Array<{
+    Name: string
+    Version: string
+    PublicKeyToken: string
+  }> | null
+  CustomAttributes: Array<{
+    TypeName: string
+    ConstructorArguments: string[]
+  }>
+  InstallationLocation: string
+}
+
 export async function loadRevitVersions(): Promise<RevitVersion[]> {
   try {
     // In a real app, this would load from JSON files or scan Revit installations
@@ -12,12 +32,100 @@ export async function loadRevitVersions(): Promise<RevitVersion[]> {
 
 export async function loadDocumentation(): Promise<DocItem[]> {
   try {
+    // Load sample data for other versions first
     const revitVersions = await loadRevitVersions()
-    return convertToLegacyFormat(revitVersions)
+    const sampleData = convertToLegacyFormat(revitVersions)
+    
+    // Load real Revit 2023 assembly data
+    const realAssemblyData = await loadRealAssemblyData()
+    
+    // Filter out sample Revit 2023 data and replace with real data
+    const filteredSampleData = sampleData.filter(item => item.revitVersionId !== 'revit-2023')
+    
+    // Combine real and sample data
+    return [...filteredSampleData, ...realAssemblyData]
   } catch (error) {
     console.error('Error loading documentation:', error)
     return []
   }
+}
+
+async function loadRealAssemblyData(): Promise<DocItem[]> {
+  try {
+    const response = await fetch('/RevitAssemblyMetadata2023.json')
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const assemblies: RealAssemblyData[] = await response.json()
+    console.log(`Loaded ${assemblies.length} assemblies from real data`)
+    
+    return convertRealAssemblyData(assemblies)
+  } catch (error) {
+    console.error('Error loading real assembly data:', error)
+    return []
+  }
+}
+
+function convertRealAssemblyData(assemblies: RealAssemblyData[]): DocItem[] {
+  const docItems: DocItem[] = []
+  
+  // Create Revit 2023 version item
+  const revit2023: DocItem = {
+    id: 'revit-2023-real',
+    name: 'Revit 2023',
+    fullName: 'Revit 2023',
+    assemblyName: 'Revit 2023',
+    version: '2023',
+    description: `Revit 2023 with ${assemblies.length} .NET assemblies analyzed`,
+    location: 'C:\\Program Files\\Autodesk\\Revit 2023\\',
+    type: 'autodesk',
+    revitVersionId: 'revit-2023-real'
+  }
+  docItems.push(revit2023)
+  
+  console.log(`Processing ${assemblies.length} assemblies...`)
+  
+  // Filter and convert valid assemblies
+  const validAssemblies = assemblies.filter(assembly => 
+    assembly.Version && 
+    !assembly.CustomAttributes?.some(attr => attr.TypeName === 'Error') &&
+    assembly.TargetFramework // Only include .NET assemblies
+  )
+  
+  console.log(`Found ${validAssemblies.length} valid assemblies out of ${assemblies.length} total`)
+  
+  validAssemblies.forEach((assembly, index) => {
+      const fileName = assembly.FilePath.split('\\').pop() || assembly.Name
+      const isThirdParty = !assembly.Name.toLowerCase().includes('autodesk') && 
+                          !assembly.Name.toLowerCase().includes('revit') &&
+                          assembly.PublicKeyToken && 
+                          assembly.PublicKeyToken !== ''
+      
+      const depItem: DocItem = {
+        id: `revit-2023-real-${index}`,
+        name: assembly.Name,
+        fullName: `${assembly.Name} v${assembly.Version}`,
+        assemblyName: assembly.Name,
+        version: assembly.Version,
+        description: `${fileName} - ${assembly.TargetFramework || 'Unknown framework'}`,
+        location: assembly.FilePath,
+        type: isThirdParty ? 'third-party' : 'autodesk',
+        revitVersionId: 'revit-2023',
+        parentId: 'revit-2023-real',
+        publicKeyToken: assembly.PublicKeyToken || undefined,
+        recommendations: assembly.PublicKeyToken ? 
+          [`Use ${assembly.Name} ${assembly.Version} for Revit 2023 compatibility`] : 
+          [`${assembly.Name} is unsigned - consider version conflicts`],
+        referencedAssemblies: assembly.ReferencedAssemblies?.map(ref => ({
+          name: ref.Name,
+          version: ref.Version,
+          publicKeyToken: ref.PublicKeyToken
+        }))
+      }
+      docItems.push(depItem)
+    })
+  
+  return docItems
 }
 
 function getRevitVersionsData(): RevitVersion[] {
@@ -25,6 +133,7 @@ function getRevitVersionsData(): RevitVersion[] {
     {
       id: 'revit-2025',
       name: 'Revit 2025',
+      description: 'Latest Revit version with enhanced cloud capabilities and improved performance',
       year: '2025',
       releaseDate: '2024-04-11',
       children: ['revit-2025-newtonsoft', 'revit-2025-aws', 'revit-2025-system'],
@@ -91,8 +200,9 @@ function getRevitVersionsData(): RevitVersion[] {
     {
       id: 'revit-2024',
       name: 'Revit 2024',
+      description: 'Stable Revit version with improved interoperability and performance enhancements',
       year: '2024',
-      releaseDate: '2023-04-13',
+      releaseDate: '2023-04-12',
       children: ['revit-2024-newtonsoft', 'revit-2024-aws', 'revit-2024-system'],
       dependencies: [
         {
@@ -140,6 +250,7 @@ function getRevitVersionsData(): RevitVersion[] {
     {
       id: 'revit-2023',
       name: 'Revit 2023',
+      description: 'Widely adopted Revit version with solid stability and extensive third-party support',
       year: '2023',
       releaseDate: '2022-04-07',
       children: ['revit-2023-newtonsoft', 'revit-2023-aws'],
@@ -177,6 +288,7 @@ function getRevitVersionsData(): RevitVersion[] {
     {
       id: 'revit-2022',
       name: 'Revit 2022',
+      description: 'Legacy Revit version still in use by many organizations',
       year: '2022',
       releaseDate: '2021-04-15',
       children: ['revit-2022-newtonsoft', 'revit-2022-aws'],
@@ -212,6 +324,7 @@ function getRevitVersionsData(): RevitVersion[] {
     {
       id: 'revit-2021',
       name: 'Revit 2021',
+      description: 'Older Revit version with limited support for modern dependencies',
       year: '2021',
       releaseDate: '2020-04-09',
       children: ['revit-2021-newtonsoft', 'revit-2021-aws'],

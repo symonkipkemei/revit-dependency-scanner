@@ -19,7 +19,8 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
       // Only show dependency items, not the Revit version parent
       return item.revitVersionId === `revit-${selectedVersion}` && 
              item.parentId && // Has a parent (is a dependency)
-             item.type !== 'autodesk' // Not the main Revit version item
+             item.assemblyName && // Has assembly information
+             item.assemblyName !== `Revit ${selectedVersion}` // Not the main Revit version item
     })
   }, [documentation, selectedVersion])
 

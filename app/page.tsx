@@ -14,7 +14,7 @@ export default function Home() {
   const [selectedItem, setSelectedItem] = useState<DocItem | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const [selectedVersion, setSelectedVersion] = useState<string>('2024')
+  const [selectedVersion, setSelectedVersion] = useState<string>('2023')
 
   useEffect(() => {
     const loadData = async () => {
@@ -25,7 +25,8 @@ export default function Home() {
         const firstDependency = docs.find(item => 
           item.revitVersionId === `revit-${selectedVersion}` && 
           item.parentId && 
-          item.type !== 'autodesk'
+          item.assemblyName && 
+          item.assemblyName !== `Revit ${selectedVersion}`
         )
         if (firstDependency) {
           setSelectedItem(firstDependency)
@@ -46,7 +47,8 @@ export default function Home() {
       const firstDependency = documentation.find(item => 
         item.revitVersionId === `revit-${selectedVersion}` && 
         item.parentId && 
-        item.type !== 'autodesk'
+        item.assemblyName && 
+        item.assemblyName !== `Revit ${selectedVersion}`
       )
       if (firstDependency) {
         setSelectedItem(firstDependency)

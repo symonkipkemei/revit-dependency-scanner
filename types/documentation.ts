@@ -73,6 +73,13 @@ export interface DocItem extends BaseItem {
   children?: string[]
   deprecated?: boolean
   since?: string
+  
+  // Referenced assemblies for real assembly data
+  referencedAssemblies?: Array<{
+    name: string
+    version: string
+    publicKeyToken: string
+  }>
 }
 
 export interface Parameter {
