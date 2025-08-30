@@ -65,87 +65,159 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
 
   return (
     <div className="h-full overflow-y-auto">
-      <div className="max-w-4xl mx-auto p-8">
+      <div className="max-w-6xl mx-auto p-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center space-x-3 mb-4">
-            <span className="text-3xl">{getTypeIcon(item.type)}</span>
+          <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">{item.name}</h1>
-              <div className="flex items-center space-x-2 mt-2">
-                {item.type && (
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${getTypeColor(item.type)}`}>
-                    {item.type}
-                  </span>
-                )}
-                {isRevitVersion(item) && (
-                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                    Revit {item.year}
-                  </span>
-                )}
-                {item.version && (
-                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
-                    v{item.version}
-                  </span>
-                )}
-                {item.deprecated && (
-                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
-                    Deprecated
-                  </span>
-                )}
+              <p className="text-gray-600 mt-2">{item.description}</p>
+            </div>
+            <div className="text-right">
+              <div className={`px-4 py-2 rounded-lg text-sm font-medium ${getTypeColor(item.type)}`}>
+                {item.type} dependency
               </div>
             </div>
           </div>
-          
-          {/* Assembly/Package Info */}
-          {isDependency(item) && (
-            <div className="bg-gray-50 p-4 rounded-lg mb-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <span className="font-medium text-gray-700">Assembly:</span>
-                  <code className="ml-2 bg-white px-2 py-1 rounded font-mono">{item.assemblyName}</code>
-                </div>
-                {item.nugetPackage && (
-                  <div>
-                    <span className="font-medium text-gray-700">NuGet Package:</span>
-                    <code className="ml-2 bg-white px-2 py-1 rounded font-mono">{item.nugetPackage}</code>
-                  </div>
-                )}
-                {item.publicKeyToken && (
-                  <div>
-                    <span className="font-medium text-gray-700">Public Key Token:</span>
-                    <code className="ml-2 bg-white px-2 py-1 rounded font-mono text-xs">{item.publicKeyToken}</code>
-                  </div>
-                )}
-                {item.location && (
-                  <div>
-                    <span className="font-medium text-gray-700">Location:</span>
-                    <code className="ml-2 bg-white px-2 py-1 rounded font-mono text-xs">{item.location}</code>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
+        </div>
 
-          {/* Revit Version Info */}
-          {isRevitVersion(item) && (
-            <div className="bg-blue-50 p-4 rounded-lg mb-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+        {/* Assembly Full Identity */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">🔍 Assembly Identity</h2>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-4">
                 <div>
-                  <span className="font-medium text-gray-700">Release Date:</span>
-                  <span className="ml-2">{item.releaseDate}</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Assembly Name</label>
+                  <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
+                    {item.assemblyName || item.name}
+                  </code>
                 </div>
                 <div>
-                  <span className="font-medium text-gray-700">Dependencies:</span>
-                  <span className="ml-2">{item.dependencies?.length || 0} packages</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Version</label>
+                  <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
+                    {item.version || 'Not specified'}
+                  </code>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Public Key Token</label>
+                  <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
+                    {item.publicKeyToken || 'None (unsigned)'}
+                  </code>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Culture</label>
+                  <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
+                    neutral
+                  </code>
                 </div>
               </div>
             </div>
-          )}
-          
-          <p className="text-gray-700 leading-relaxed">
-            {item.description}
-          </p>
+            
+            {/* Full Assembly Identity */}
+            <div className="mt-6 pt-4 border-t border-gray-300">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Full Assembly Identity</label>
+              <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm break-all">
+                {item.assemblyName || item.name}, Version={item.version || '0.0.0.0'}, Culture=neutral, PublicKeyToken={item.publicKeyToken || 'null'}
+              </code>
+            </div>
+          </div>
+        </div>
+
+        {/* Strong Naming Status */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">🔐 Strong Naming</h2>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <div className="flex items-center space-x-3">
+              <div className={`w-3 h-3 rounded-full ${item.publicKeyToken ? 'bg-green-500' : 'bg-red-500'}`}></div>
+              <span className="font-medium">
+                {item.publicKeyToken ? 'Strong-named assembly' : 'Unsigned assembly'}
+              </span>
+            </div>
+            <p className="text-sm text-gray-600 mt-2">
+              {item.publicKeyToken 
+                ? 'This assembly is digitally signed and has a strong name, providing version and tamper protection.'
+                : 'This assembly is not strong-named and may be subject to version conflicts.'
+              }
+            </p>
+          </div>
+        </div>
+
+        {/* NuGet Package Information */}
+        {item.nugetPackage && (
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">📦 NuGet Package</h2>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Package Name</label>
+                  <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
+                    {item.nugetPackage}
+                  </code>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Package Version</label>
+                  <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
+                    {item.nugetVersion || 'Not specified'}
+                  </code>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Installation Location */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">📍 Installation Location</h2>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm break-all">
+              {item.location}
+            </code>
+          </div>
+        </div>
+
+        {/* Version Compatibility & Binding Redirects */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">🔄 Version Compatibility</h2>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Supported Version Range</label>
+                <div className="bg-white border border-gray-300 rounded px-3 py-2">
+                  <code className="font-mono text-sm">
+                    {item.nugetVersion ? `>= ${item.nugetVersion}` : 'Any version'}
+                  </code>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Binding Redirect Suggestion</label>
+                <div className="bg-white border border-gray-300 rounded px-3 py-2">
+                  <code className="font-mono text-sm text-blue-600">
+                    {item.version ? `newVersion="${item.version}"` : 'Not required'}
+                  </code>
+                </div>
+              </div>
+            </div>
+            {item.nugetPackage && (
+              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded">
+                <h4 className="font-medium text-blue-900 mb-2">Suggested app.config binding redirect:</h4>
+                <code className="block bg-white border border-blue-300 rounded px-3 py-2 font-mono text-xs overflow-x-auto">
+{`<runtime>
+  <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+    <dependentAssembly>
+      <assemblyIdentity name="${item.assemblyName || item.name}" 
+                        publicKeyToken="${item.publicKeyToken || 'null'}" 
+                        culture="neutral" />
+      <bindingRedirect oldVersion="0.0.0.0-${item.version}" newVersion="${item.version}" />
+    </dependentAssembly>
+  </assemblyBinding>
+</runtime>`}
+                </code>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Syntax */}
