@@ -63,6 +63,22 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
     return item.assemblyName && item.revitVersionId
   }
 
+  const getFrameworkVersionColor = (frameworkInfo?: string) => {
+    if (!frameworkInfo) return 'bg-gray-100 text-gray-800'
+    
+    // Extract version number from framework string
+    const versionMatch = frameworkInfo.match(/v(\d+\.\d+)/)
+    if (!versionMatch) return 'bg-gray-100 text-gray-800'
+    
+    const version = parseFloat(versionMatch[1])
+    
+    if (version >= 4.8) return 'bg-emerald-100 text-emerald-800'
+    if (version >= 4.7) return 'bg-yellow-100 text-yellow-800'
+    if (version >= 4.6) return 'bg-orange-100 text-orange-800'
+    if (version >= 4.5) return 'bg-red-100 text-red-800'
+    return 'bg-gray-100 text-gray-800'
+  }
+
   return (
     <div className="h-full overflow-y-auto">
       <div className="max-w-6xl mx-auto p-8">
@@ -70,9 +86,13 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
         <div className="mb-8">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900 mb-3">{item.name}</h1>
-            <p className="text-gray-600 mb-4">{item.description}</p>
-            <div className={`inline-block px-4 py-2 rounded-lg text-sm font-medium ${getTypeColor(item.type)}`}>
-              {item.type} dependency
+            <div className="flex items-center gap-3 mb-4">
+              <div className={`px-4 py-2 rounded-lg text-sm font-medium ${getTypeColor(item.type)}`}>
+                {item.type ? item.type.charAt(0).toUpperCase() + item.type.slice(1) : 'Unknown'} dependency
+              </div>
+              <div className={`px-4 py-2 rounded-lg text-sm font-medium ${getFrameworkVersionColor(item.description?.split(' - ')[1])}`}>
+                {item.description?.split(' - ')[1] || '.NET Framework version not available'}
+              </div>
             </div>
           </div>
         </div>
@@ -81,30 +101,38 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
         <div className="mb-8">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">🔍 Assembly Identity</h2>
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Assembly Name</label>
-                <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
-                  {item.assemblyName || item.name}
-                </code>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Assembly Name</label>
+                <div className="bg-white border border-gray-300 rounded px-3 py-2">
+                  <code className="font-mono text-sm">
+                    {item.assemblyName || item.name}
+                  </code>
+                </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Version</label>
-                <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
-                  {item.version || 'Not specified'}
-                </code>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Version</label>
+                <div className="bg-white border border-gray-300 rounded px-3 py-2">
+                  <code className="font-mono text-sm">
+                    {item.version || 'Not specified'}
+                  </code>
+                </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Public Key Token</label>
-                <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
-                  {item.publicKeyToken || 'None (unsigned)'}
-                </code>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Public Key Token</label>
+                <div className="bg-white border border-gray-300 rounded px-3 py-2">
+                  <code className="font-mono text-sm">
+                    {item.publicKeyToken || 'None (unsigned)'}
+                  </code>
+                </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Culture</label>
-                <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
-                  neutral
-                </code>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Culture</label>
+                <div className="bg-white border border-gray-300 rounded px-3 py-2">
+                  <code className="font-mono text-sm">
+                    neutral
+                  </code>
+                </div>
               </div>
             </div>
             
