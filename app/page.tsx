@@ -53,7 +53,7 @@ export default function Home() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-lg">Loading documentation...</div>
+        <div className="text-lg">Loading Revit dependencies...</div>
       </div>
     )
   }
@@ -63,7 +63,13 @@ export default function Home() {
       {/* Sidebar */}
       <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
         <div className="p-4 border-b border-gray-200">
-          <h1 className="text-xl font-bold text-gray-900 mb-4">API Documentation</h1>
+          <div className="flex items-center space-x-2 mb-4">
+            <span className="text-2xl">🏗️</span>
+            <h1 className="text-xl font-bold text-gray-900">Revit Dependency Scanner</h1>
+          </div>
+          <p className="text-sm text-gray-600 mb-4">
+            Find compatible package versions for Revit 2021-2025. Avoid dependency hell.
+          </p>
           <SearchBar 
             onSearch={handleSearch}
             searchResults={searchResults}

@@ -5,8 +5,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'API Documentation Browser',
-  description: 'Searchable, interactive documentation browser built with Next.js and TypeScript',
+  title: 'Revit Dependency Scanner',
+  description: 'Avoid dependency hell in Revit development. Find compatible package versions for Revit 2021-2025.',
 }
 
 export default function RootLayout({

@@ -79,7 +79,7 @@ export default function SearchBar({ onSearch, searchResults, onSelectResult, que
         <input
           ref={inputRef}
           type="text"
-          placeholder="Search documentation..."
+          placeholder="Search dependencies (e.g., Newtonsoft.Json, AWS, Revit 2024)..."
           value={query}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
@@ -106,18 +106,18 @@ export default function SearchBar({ onSearch, searchResults, onSelectResult, que
               onClick={() => handleSelectResult(result.item)}
             >
               <div className="flex items-center space-x-3">
-                <span className="text-lg">{getTypeIcon(result.item.type)}</span>
+                <span className="text-lg">{getTypeIcon(result.item.type || 'unknown')}</span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center space-x-2">
                     <span className="font-medium text-gray-900 truncate">
                       {result.item.name}
                     </span>
                     <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-                      {result.item.type}
+                      {result.item.type || 'unknown'}
                     </span>
                   </div>
                   <div className="text-sm text-gray-500 truncate">
-                    {result.item.fullName}
+                    {result.item.fullName || result.item.assemblyName || result.item.name}
                   </div>
                   {result.item.description && (
                     <div className="text-xs text-gray-400 mt-1 line-clamp-2">

@@ -19,8 +19,14 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
     )
   }
 
-  const getTypeIcon = (type: string) => {
+  const getTypeIcon = (type?: string) => {
     switch (type) {
+      case 'autodesk': return '🏗️'
+      case 'third-party': return '📦'
+      case 'aws': return '☁️'
+      case 'microsoft': return '🪟'
+      case 'system': return '⚙️'
+      // Legacy support
       case 'namespace': return '📁'
       case 'class': return '🏛️'
       case 'interface': return '🔌'
@@ -31,8 +37,14 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
     }
   }
 
-  const getTypeColor = (type: string) => {
+  const getTypeColor = (type?: string) => {
     switch (type) {
+      case 'autodesk': return 'bg-blue-100 text-blue-800'
+      case 'third-party': return 'bg-purple-100 text-purple-800'
+      case 'aws': return 'bg-orange-100 text-orange-800'
+      case 'microsoft': return 'bg-green-100 text-green-800'
+      case 'system': return 'bg-gray-100 text-gray-800'
+      // Legacy support
       case 'namespace': return 'bg-blue-100 text-blue-800'
       case 'class': return 'bg-green-100 text-green-800'
       case 'interface': return 'bg-purple-100 text-purple-800'
@@ -41,6 +53,14 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
       case 'enum': return 'bg-indigo-100 text-indigo-800'
       default: return 'bg-gray-100 text-gray-800'
     }
+  }
+
+  const isRevitVersion = (item: DocItem) => {
+    return item.year && item.releaseDate
+  }
+
+  const isDependency = (item: DocItem) => {
+    return item.assemblyName && item.revitVersionId
   }
 
   return (
@@ -53,28 +73,75 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
             <div>
               <h1 className="text-3xl font-bold text-gray-900">{item.name}</h1>
               <div className="flex items-center space-x-2 mt-2">
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${getTypeColor(item.type)}`}>
-                  {item.type}
-                </span>
+                {item.type && (
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${getTypeColor(item.type)}`}>
+                    {item.type}
+                  </span>
+                )}
+                {isRevitVersion(item) && (
+                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                    Revit {item.year}
+                  </span>
+                )}
+                {item.version && (
+                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                    v{item.version}
+                  </span>
+                )}
                 {item.deprecated && (
                   <span className="px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                     Deprecated
-                  </span>
-                )}
-                {item.since && (
-                  <span className="text-sm text-gray-500">
-                    Since: {item.since}
                   </span>
                 )}
               </div>
             </div>
           </div>
           
-          <div className="text-lg text-gray-600 mb-4">
-            <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono">
-              {item.fullName}
-            </code>
-          </div>
+          {/* Assembly/Package Info */}
+          {isDependency(item) && (
+            <div className="bg-gray-50 p-4 rounded-lg mb-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="font-medium text-gray-700">Assembly:</span>
+                  <code className="ml-2 bg-white px-2 py-1 rounded font-mono">{item.assemblyName}</code>
+                </div>
+                {item.nugetPackage && (
+                  <div>
+                    <span className="font-medium text-gray-700">NuGet Package:</span>
+                    <code className="ml-2 bg-white px-2 py-1 rounded font-mono">{item.nugetPackage}</code>
+                  </div>
+                )}
+                {item.publicKeyToken && (
+                  <div>
+                    <span className="font-medium text-gray-700">Public Key Token:</span>
+                    <code className="ml-2 bg-white px-2 py-1 rounded font-mono text-xs">{item.publicKeyToken}</code>
+                  </div>
+                )}
+                {item.location && (
+                  <div>
+                    <span className="font-medium text-gray-700">Location:</span>
+                    <code className="ml-2 bg-white px-2 py-1 rounded font-mono text-xs">{item.location}</code>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Revit Version Info */}
+          {isRevitVersion(item) && (
+            <div className="bg-blue-50 p-4 rounded-lg mb-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="font-medium text-gray-700">Release Date:</span>
+                  <span className="ml-2">{item.releaseDate}</span>
+                </div>
+                <div>
+                  <span className="font-medium text-gray-700">Dependencies:</span>
+                  <span className="ml-2">{item.dependencies?.length || 0} packages</span>
+                </div>
+              </div>
+            </div>
+          )}
           
           <p className="text-gray-700 leading-relaxed">
             {item.description}
@@ -146,6 +213,68 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Returns</h2>
             <div className="bg-gray-50 p-4 rounded-lg">
               <code className="font-mono text-sm text-blue-600">{item.returnType}</code>
+            </div>
+          </div>
+        )}
+
+        {/* Recommendations */}
+        {item.recommendations && item.recommendations.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">💡 Recommendations</h2>
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <ul className="space-y-2">
+                {item.recommendations.map((rec, index) => (
+                  <li key={index} className="flex items-start space-x-2">
+                    <span className="text-green-600 mt-1">✓</span>
+                    <span className="text-green-800">{rec}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {/* Conflicts */}
+        {item.conflicts && item.conflicts.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">⚠️ Known Conflicts</h2>
+            <div className="space-y-4">
+              {item.conflicts.map((conflict, index) => (
+                <div key={index} className={`border rounded-lg p-4 ${
+                  conflict.severity === 'error' 
+                    ? 'bg-red-50 border-red-200' 
+                    : 'bg-yellow-50 border-yellow-200'
+                }`}>
+                  <div className="flex items-start space-x-3">
+                    <span className={`text-lg ${
+                      conflict.severity === 'error' ? 'text-red-600' : 'text-yellow-600'
+                    }`}>
+                      {conflict.severity === 'error' ? '🚫' : '⚠️'}
+                    </span>
+                    <div className="flex-1">
+                      <h3 className={`font-medium ${
+                        conflict.severity === 'error' ? 'text-red-900' : 'text-yellow-900'
+                      }`}>
+                        Conflicts with: {conflict.conflictsWith}
+                      </h3>
+                      <p className={`text-sm mt-1 ${
+                        conflict.severity === 'error' ? 'text-red-700' : 'text-yellow-700'
+                      }`}>
+                        {conflict.reason}
+                      </p>
+                      {conflict.solution && (
+                        <div className={`mt-2 p-2 rounded text-sm ${
+                          conflict.severity === 'error' 
+                            ? 'bg-red-100 text-red-800' 
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          <strong>Solution:</strong> {conflict.solution}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}

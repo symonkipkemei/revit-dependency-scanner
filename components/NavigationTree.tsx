@@ -56,6 +56,12 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
 
   const getTypeIcon = (type: string) => {
     switch (type) {
+      case 'autodesk': return '🏗️'
+      case 'third-party': return '📦'
+      case 'aws': return '☁️'
+      case 'microsoft': return '🪟'
+      case 'system': return '⚙️'
+      // Legacy support
       case 'namespace': return '📁'
       case 'class': return '🏛️'
       case 'interface': return '🔌'
@@ -68,6 +74,12 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
 
   const getTypeColor = (type: string) => {
     switch (type) {
+      case 'autodesk': return 'text-blue-600'
+      case 'third-party': return 'text-purple-600'
+      case 'aws': return 'text-orange-600'
+      case 'microsoft': return 'text-green-600'
+      case 'system': return 'text-gray-600'
+      // Legacy support
       case 'namespace': return 'text-blue-600'
       case 'class': return 'text-green-600'
       case 'interface': return 'text-purple-600'
@@ -76,6 +88,15 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
       case 'enum': return 'text-indigo-600'
       default: return 'text-gray-600'
     }
+  }
+
+  const getItemType = (item: DocItem): string => {
+    // Check if it's a Revit version (has year property)
+    if ('year' in item) {
+      return 'autodesk'
+    }
+    // Otherwise it's a dependency with a type property
+    return item.type || 'system'
   }
 
   const renderNode = (node: NavigationNode, depth: number = 0) => {
@@ -92,7 +113,7 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
               : 'hover:bg-gray-100'
           }`}
           style={{ paddingLeft: `${depth * 20 + 8}px` }}
-          onClick={() => onSelectItem(node.item)}
+          onClick={() => onSelectItem(node.item as DocItem)}
         >
           {hasChildren && (
             <button
@@ -119,7 +140,7 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
           )}
           {!hasChildren && <div className="w-5" />}
           
-          <span className="mr-2 text-sm">{getTypeIcon(node.item.type)}</span>
+          <span className="mr-2 text-sm">{getTypeIcon(getItemType(node.item))}</span>
           
           <div className="flex-1 min-w-0">
             <div className="flex items-center space-x-2">
@@ -128,9 +149,14 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
               }`}>
                 {node.item.name}
               </span>
-              <span className={`text-xs px-1.5 py-0.5 rounded ${getTypeColor(node.item.type)} bg-gray-100`}>
-                {node.item.type}
+              <span className={`text-xs px-1.5 py-0.5 rounded ${getTypeColor(getItemType(node.item))} bg-gray-100`}>
+                {getItemType(node.item)}
               </span>
+              {'version' in node.item && node.item.version && (
+                <span className="text-xs text-gray-500">
+                  v{node.item.version}
+                </span>
+              )}
             </div>
           </div>
         </div>
