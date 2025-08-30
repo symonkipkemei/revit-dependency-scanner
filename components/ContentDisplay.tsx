@@ -68,15 +68,11 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
       <div className="max-w-6xl mx-auto p-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">{item.name}</h1>
-              <p className="text-gray-600 mt-2">{item.description}</p>
-            </div>
-            <div className="text-right">
-              <div className={`px-4 py-2 rounded-lg text-sm font-medium ${getTypeColor(item.type)}`}>
-                {item.type} dependency
-              </div>
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold text-gray-900 mb-3">{item.name}</h1>
+            <p className="text-gray-600 mb-4">{item.description}</p>
+            <div className={`inline-block px-4 py-2 rounded-lg text-sm font-medium ${getTypeColor(item.type)}`}>
+              {item.type} dependency
             </div>
           </div>
         </div>
@@ -85,34 +81,30 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
         <div className="mb-8">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">🔍 Assembly Identity</h2>
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Assembly Name</label>
-                  <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
-                    {item.assemblyName || item.name}
-                  </code>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Version</label>
-                  <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
-                    {item.version || 'Not specified'}
-                  </code>
-                </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Assembly Name</label>
+                <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
+                  {item.assemblyName || item.name}
+                </code>
               </div>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Public Key Token</label>
-                  <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
-                    {item.publicKeyToken || 'None (unsigned)'}
-                  </code>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Culture</label>
-                  <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
-                    neutral
-                  </code>
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Version</label>
+                <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
+                  {item.version || 'Not specified'}
+                </code>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Public Key Token</label>
+                <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
+                  {item.publicKeyToken || 'None (unsigned)'}
+                </code>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Culture</label>
+                <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
+                  neutral
+                </code>
               </div>
             </div>
             
@@ -163,6 +155,30 @@ export default function ContentDisplay({ item }: ContentDisplayProps) {
                     {item.nugetVersion || 'Not specified'}
                   </code>
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Referenced Assemblies */}
+        {item.referencedAssemblies && item.referencedAssemblies.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">🔗 Referenced Assemblies</h2>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+              <div className="space-y-3">
+                {item.referencedAssemblies.map((ref, index) => (
+                  <div key={index} className="bg-white border border-gray-300 rounded p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-medium text-gray-900">{ref.name}</span>
+                      <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
+                        v{ref.version}
+                      </span>
+                    </div>
+                    <div className="text-xs text-gray-500 font-mono">
+                      PublicKeyToken: {ref.publicKeyToken || 'None'}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
