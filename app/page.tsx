@@ -21,10 +21,14 @@ export default function Home() {
       try {
         const docs = await loadDocumentation()
         setDocumentation(docs)
-        // Set first item of selected version as default selection
-        const versionItem = docs.find(item => item.revitVersionId === `revit-${selectedVersion}`)
-        if (versionItem) {
-          setSelectedItem(versionItem)
+        // Set first dependency of selected version as default selection
+        const firstDependency = docs.find(item => 
+          item.revitVersionId === `revit-${selectedVersion}` && 
+          item.parentId && 
+          item.type !== 'autodesk'
+        )
+        if (firstDependency) {
+          setSelectedItem(firstDependency)
         }
       } catch (error) {
         console.error('Failed to load documentation:', error)
@@ -36,12 +40,16 @@ export default function Home() {
     loadData()
   }, [])
 
-  // Update selected item when version changes
+  // Update selected item when version changes - select first dependency
   useEffect(() => {
     if (documentation.length > 0) {
-      const versionItem = documentation.find(item => item.revitVersionId === `revit-${selectedVersion}`)
-      if (versionItem) {
-        setSelectedItem(versionItem)
+      const firstDependency = documentation.find(item => 
+        item.revitVersionId === `revit-${selectedVersion}` && 
+        item.parentId && 
+        item.type !== 'autodesk'
+      )
+      if (firstDependency) {
+        setSelectedItem(firstDependency)
       }
     }
   }, [selectedVersion, documentation])

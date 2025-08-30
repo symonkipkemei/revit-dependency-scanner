@@ -13,46 +13,15 @@ interface NavigationTreeProps {
 export default function NavigationTree({ documentation, onSelectItem, selectedItem, selectedVersion }: NavigationTreeProps) {
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set(['system']))
 
-  // Filter documentation by selected version
-  const filteredDocumentation = useMemo(() => {
+  // Filter to show only dependencies (not the Revit version item itself)
+  const filteredDependencies = useMemo(() => {
     return documentation.filter(item => {
-      // Check if item is for the selected Revit version
-      return item.revitVersionId === `revit-${selectedVersion}` || 
-             item.name.includes(`Revit ${selectedVersion}`) ||
-             item.fullName?.includes(`${selectedVersion}`) ||
-             item.assemblyName?.includes(`${selectedVersion}`)
+      // Only show dependency items, not the Revit version parent
+      return item.revitVersionId === `revit-${selectedVersion}` && 
+             item.parentId && // Has a parent (is a dependency)
+             item.type !== 'autodesk' // Not the main Revit version item
     })
   }, [documentation, selectedVersion])
-
-  const navigationTree = useMemo(() => {
-    const nodeMap = new Map<string, NavigationNode>()
-    const rootNodes: NavigationNode[] = []
-
-    // Create nodes for filtered items
-    filteredDocumentation.forEach(item => {
-      nodeMap.set(item.id, {
-        item,
-        children: [],
-        expanded: expandedNodes.has(item.id)
-      })
-    })
-
-    // Build the tree structure
-    filteredDocumentation.forEach(item => {
-      const node = nodeMap.get(item.id)!
-      
-      if (item.parentId) {
-        const parent = nodeMap.get(item.parentId)
-        if (parent) {
-          parent.children.push(node)
-        }
-      } else {
-        rootNodes.push(node)
-      }
-    })
-
-    return rootNodes
-  }, [filteredDocumentation, expandedNodes])
 
   const toggleExpanded = (nodeId: string) => {
     setExpandedNodes(prev => {
@@ -184,7 +153,36 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
 
   return (
     <div className="py-2">
-      {navigationTree.map(node => renderNode(node))}
+      {filteredDependencies.map(item => (
+        <div
+          key={item.id}
+          className={`flex items-center px-2 py-1 cursor-pointer rounded-md mx-2 ${
+            selectedItem?.id === item.id
+              ? 'bg-primary-100 text-primary-700 border border-primary-200'
+              : 'hover:bg-gray-100'
+          }`}
+          onClick={() => onSelectItem(item)}
+        >
+          <span className="mr-2 text-sm">{getTypeIcon(item.type || 'unknown')}</span>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center space-x-2">
+              <span className={`font-medium text-sm truncate ${
+                selectedItem?.id === item.id ? 'text-primary-700' : 'text-gray-900'
+              }`}>
+                {item.name}
+              </span>
+              <span className={`text-xs px-1.5 py-0.5 rounded ${getTypeColor(getItemType(item))} bg-gray-100`}>
+                {getItemType(item)}
+              </span>
+              {item.version && (
+                <span className="text-xs text-gray-500">
+                  v{item.version}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
