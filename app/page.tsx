@@ -52,8 +52,8 @@ export default function Home() {
       )
       if (firstDependency) {
         setSelectedItem(firstDependency)
-      } else if (selectedVersion === '2025') {
-        // Show coming soon message for Revit 2025
+      } else if (selectedVersion === '2025' || selectedVersion === '2026') {
+        // Show coming soon message for Revit 2025/2026
         setSelectedItem(null)
       }
     }
@@ -106,7 +106,7 @@ export default function Home() {
         
         {/* Version Tabs */}
         <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
-          {['2021', '2022', '2023', '2024', '2025'].map((version) => (
+          {['2021', '2022', '2023', '2024', '2025', '2026'].map((version) => (
             <button
               key={version}
               onClick={() => setSelectedVersion(version)}
@@ -145,7 +145,7 @@ export default function Home() {
 
         {/* Main content */}
         <div className="flex-1 overflow-y-auto">
-          <ContentDisplay item={selectedItem} />
+          <ContentDisplay item={selectedItem} selectedVersion={selectedVersion} />
         </div>
       </div>
     </div>

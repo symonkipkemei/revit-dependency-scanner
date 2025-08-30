@@ -154,11 +154,11 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
 
   return (
     <div className="py-2">
-      {selectedVersion === '2025' ? (
+      {(selectedVersion === '2025' || selectedVersion === '2026') ? (
         <div className="flex items-center justify-center h-32 text-gray-500">
           <div className="text-center">
             <div className="text-3xl mb-2">🚧</div>
-            <p className="text-sm font-medium">Revit 2025 Data</p>
+            <p className="text-sm font-medium">Revit {selectedVersion} Data</p>
             <p className="text-xs">Coming Soon</p>
           </div>
         </div>

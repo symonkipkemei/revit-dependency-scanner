@@ -4,17 +4,18 @@ import { DocItem } from '@/types/documentation'
 
 interface ContentDisplayProps {
   item: DocItem | null
+  selectedVersion?: string
 }
 
-export default function ContentDisplay({ item }: ContentDisplayProps) {
+export default function ContentDisplay({ item, selectedVersion }: ContentDisplayProps) {
   if (!item) {
     return (
       <div className="flex items-center justify-center h-full text-gray-500">
         <div className="text-center">
           <div className="text-6xl mb-4">🚧</div>
-          <h2 className="text-xl font-semibold mb-2">Revit 2025 Assembly Data</h2>
+          <h2 className="text-xl font-semibold mb-2">Revit Assembly Data</h2>
           <p className="text-lg font-medium mb-1">Coming Soon</p>
-          <p className="text-sm">Assembly metadata for Revit 2025 will be available in a future update.</p>
+          <p className="text-sm">Assembly metadata for Revit {selectedVersion || '2025'} will be available in a future update.</p>
         </div>
       </div>
     )
