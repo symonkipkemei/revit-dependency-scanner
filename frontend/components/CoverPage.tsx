@@ -14,12 +14,18 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
       <div className="max-w-4xl mx-auto text-center" style={{ fontFamily: 'Quan Light, sans-serif' }}>
         {/* Hero Section */}
         <div className="mb-8">
-          <h1 className="text-6xl md:text-7xl text-black mb-6 leading-tight" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
-            Revit Dependency
-            <span className="text-black block">Scanner</span>
-          </h1>
+          <div className="flex flex-col items-center mb-6">
+            <img 
+              src="/icons/ICON-Black.png" 
+              alt="Revit Dependency Scanner" 
+              className="w-24 h-24 md:w-32 md:h-32 mb-4"
+            />
+            <h1 className="text-6xl md:text-7xl text-black leading-tight text-center" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
+              Revit Dependency Scanner
+            </h1>
+          </div>
           <p className="text-2xl md:text-3xl text-gray-700 mb-4 leading-relaxed max-w-3xl mx-auto">
-            Find compatible package versions across Revit installations.
+            Find compatible package versions across Revit versions.
           </p>
           <p className="text-2xl md:text-3xl text-black font-medium mb-8 max-w-3xl mx-auto">
             Avoid dependency hell.
