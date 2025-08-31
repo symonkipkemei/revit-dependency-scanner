@@ -36,15 +36,15 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
             
             <div className="flex flex-wrap justify-center lg:justify-start gap-4 lg:gap-6 text-sm sm:text-base lg:text-lg text-gray-700 mb-6 lg:mb-8">
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-black rounded-full"></div>
+                <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full shadow-sm"></div>
                 <span>Revit 2021-2024</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-gray-600 rounded-full"></div>
+                <div className="w-3 h-3 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full shadow-sm"></div>
                 <span>Real Assembly Data</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-gray-800 rounded-full"></div>
+                <div className="w-3 h-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-full shadow-sm"></div>
                 <span>Compatibility Analysis</span>
               </div>
             </div>
