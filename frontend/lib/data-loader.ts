@@ -48,7 +48,8 @@ export async function loadDocumentation(): Promise<DocItem[]> {
 
 async function loadRealAssemblyDataForVersion(version: string): Promise<DocItem[]> {
   try {
-    const response = await fetch(`/RevitAssemblyMetadata${version}.json`)
+    const basePath = process.env.NODE_ENV === 'production' ? '/revit-dependency-scanner' : ''
+    const response = await fetch(`${basePath}/RevitAssemblyMetadata${version}.json`)
     if (!response.ok) {
       console.warn(`No data file found for Revit ${version}`)
       return []
