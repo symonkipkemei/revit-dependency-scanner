@@ -27,7 +27,8 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
               Revit Dependency Scanner
             </h1>
             <p className="text-2xl md:text-3xl text-gray-700 mb-4 leading-relaxed">
-              Find compatible package versions across Revit versions.
+              Find compatible package versions<br />
+              across Revit versions.
             </p>
             <p className="text-2xl md:text-3xl text-black font-medium mb-8">
               Avoid dependency hell.
@@ -53,7 +54,7 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               className="
-                group relative px-12 py-4 bg-black text-white rounded-full text-xl font-semibold
+                group relative px-6 py-2 bg-black text-white rounded-lg text-lg font-semibold
                 transform transition-all duration-300 ease-out
                 hover:bg-gray-800 hover:scale-105 hover:shadow-xl
                 focus:outline-none focus:ring-4 focus:ring-gray-200
