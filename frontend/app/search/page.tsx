@@ -105,40 +105,31 @@ export default function SearchPage() {
     <div className="flex flex-col h-screen bg-gray-50">
       {/* Top Bar */}
       <div className="bg-white border-b border-gray-200 p-4">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-2">
-            <button 
-              onClick={handleBackToHome}
-              className="text-2xl hover:opacity-70 transition-opacity"
-              title="Back to Home"
-            >
-              🏗️
-            </button>
-            <h1 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
-              Revit Dependency Scanner
-            </h1>
+        {/* Version Tabs with Home Icon */}
+        <div className="flex items-center space-x-3">
+          <button 
+            onClick={handleBackToHome}
+            className="text-2xl hover:opacity-70 transition-opacity"
+            title="Back to Home"
+          >
+            🏗️
+          </button>
+          <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg flex-1">
+            {['2021', '2022', '2023', '2024', '2025', '2026'].map((version) => (
+              <button
+                key={version}
+                onClick={() => setSelectedVersion(version)}
+                className={`px-4 py-2 rounded-md text-base font-semibold transition-colors ${
+                  selectedVersion === version
+                    ? 'bg-white text-gray-900 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                }`}
+                style={{ fontFamily: 'Quan Light, sans-serif' }}
+              >
+                Revit {version}
+              </button>
+            ))}
           </div>
-          <p className="text-base text-gray-600 font-medium" style={{ fontFamily: 'Quan Light, sans-serif' }}>
-            Find compatible package versions. Avoid dependency hell.
-          </p>
-        </div>
-        
-        {/* Version Tabs */}
-        <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
-          {['2021', '2022', '2023', '2024', '2025', '2026'].map((version) => (
-            <button
-              key={version}
-              onClick={() => setSelectedVersion(version)}
-              className={`px-4 py-2 rounded-md text-base font-semibold transition-colors ${
-                selectedVersion === version
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
-              style={{ fontFamily: 'Quan Light, sans-serif' }}
-            >
-              Revit {version}
-            </button>
-          ))}
         </div>
       </div>
 
