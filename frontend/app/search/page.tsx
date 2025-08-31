@@ -135,8 +135,8 @@ export default function SearchPage() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
-          <div className="p-4 border-b border-gray-200">
+        <div className="w-80 bg-white border-r border-gray-200 flex flex-col overflow-y-auto scrollbar-custom">
+          <div className="sticky top-0 bg-white z-10 p-4">
             <SearchBar 
               onSearch={handleSearch}
               searchResults={searchResults}
@@ -144,7 +144,7 @@ export default function SearchPage() {
               query={searchQuery}
             />
           </div>
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1">
             <NavigationTree 
               documentation={documentation}
               onSelectItem={handleSelectItem}
@@ -155,7 +155,7 @@ export default function SearchPage() {
         </div>
 
         {/* Main content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto bg-white">
           <ContentDisplay item={selectedItem} selectedVersion={selectedVersion} />
         </div>
       </div>
