@@ -78,7 +78,9 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
             </h1>
             <div className="flex items-center gap-3 mb-4">
               <div className={`px-4 py-2 rounded-lg text-sm font-medium ${getTypeColor(item.type)}`}>
-                {item.type ? item.type.charAt(0).toUpperCase() + item.type.slice(1) : 'Unknown'} dependency
+                {item.type === 'third-party' ? 'Third-Party Dependency' : 
+                 item.type === 'autodesk' ? 'Autodesk Dependency' : 
+                 item.type ? item.type.charAt(0).toUpperCase() + item.type.slice(1) + ' dependency' : 'Unknown dependency'}
               </div>
               <div className={`px-4 py-2 rounded-lg text-sm font-medium ${getFrameworkVersionColor(item.description?.split(' - ')[1])}`}>
                 {item.description?.split(' - ')[1] || '.NET Framework version not available'}
