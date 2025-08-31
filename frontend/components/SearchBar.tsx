@@ -89,7 +89,11 @@ export default function SearchBar({ onSearch, searchResults, onSelectResult, que
           />
           <button
             type="button"
-            className="px-3 py-2 bg-black text-white border border-black hover:bg-gray-800 focus:ring-1 focus:ring-gray-400 focus:outline-none"
+            className="px-3 py-2 text-white border focus:ring-1 focus:ring-gray-400 focus:outline-none"
+            style={{ 
+              backgroundColor: 'rgb(40, 40, 42)', 
+              borderColor: 'rgb(40, 40, 42)' 
+            }}
           >
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

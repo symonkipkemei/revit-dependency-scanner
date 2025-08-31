@@ -23,15 +23,17 @@ export default function SearchPage() {
       try {
         const docs = await loadDocumentation()
         setDocumentation(docs)
-        // Set first dependency of selected version as default selection
-        const firstDependency = docs.find(item => 
-          item.revitVersionId === `revit-${selectedVersion}` && 
-          item.parentId && 
-          item.assemblyName && 
-          item.assemblyName !== `Revit ${selectedVersion}`
-        )
-        if (firstDependency) {
-          setSelectedItem(firstDependency)
+        // Only set initial selection if no item is currently selected
+        if (!selectedItem) {
+          const firstDependency = docs.find(item => 
+            item.revitVersionId === `revit-${selectedVersion}` && 
+            item.parentId && 
+            item.assemblyName && 
+            item.assemblyName !== `Revit ${selectedVersion}`
+          )
+          if (firstDependency) {
+            setSelectedItem(firstDependency)
+          }
         }
       } catch (error) {
         console.error('Failed to load documentation:', error)
@@ -43,9 +45,35 @@ export default function SearchPage() {
     loadData()
   }, [selectedVersion])
 
-  // Update selected item when version changes - select first dependency
+  // Update selected item when version changes - try to maintain same item across versions
   useEffect(() => {
-    if (documentation.length > 0) {
+    if (documentation.length > 0 && selectedItem) {
+      // Try to find the same assembly in the new version
+      const sameItemInNewVersion = documentation.find(item => 
+        item.revitVersionId === `revit-${selectedVersion}` && 
+        item.assemblyName === selectedItem.assemblyName
+      )
+      
+      if (sameItemInNewVersion) {
+        // Found the same item in the new version, keep it selected
+        setSelectedItem(sameItemInNewVersion)
+      } else {
+        // Item doesn't exist in this version, select first dependency
+        const firstDependency = documentation.find(item => 
+          item.revitVersionId === `revit-${selectedVersion}` && 
+          item.parentId && 
+          item.assemblyName && 
+          item.assemblyName !== `Revit ${selectedVersion}`
+        )
+        if (firstDependency) {
+          setSelectedItem(firstDependency)
+        } else if (selectedVersion === '2025' || selectedVersion === '2026') {
+          // Show coming soon message for Revit 2025/2026
+          setSelectedItem(null)
+        }
+      }
+    } else if (documentation.length > 0 && !selectedItem) {
+      // No item selected, select first dependency
       const firstDependency = documentation.find(item => 
         item.revitVersionId === `revit-${selectedVersion}` && 
         item.parentId && 
@@ -54,9 +82,6 @@ export default function SearchPage() {
       )
       if (firstDependency) {
         setSelectedItem(firstDependency)
-      } else if (selectedVersion === '2025' || selectedVersion === '2026') {
-        // Show coming soon message for Revit 2025/2026
-        setSelectedItem(null)
       }
     }
   }, [selectedVersion, documentation])
