@@ -1,15 +1,18 @@
-# 🏗️ Revit Dependency Scanner
+# Revit Dependency Scanner
 
 A comprehensive tool for analyzing and managing .NET assembly dependencies in Autodesk Revit installations. This project helps developers avoid dependency hell by providing detailed information about package versions, compatibility, and potential conflicts across different Revit versions.
 
-## 📋 Overview
+<img width="1644" height="866" alt="image" src="https://github.com/user-attachments/assets/dc360046-0140-4225-8fdf-53e624447b9a" />
+
+
+## Overview
 
 The Revit Dependency Scanner consists of two main components:
 
 1. **Frontend**: A modern Next.js web application for browsing and searching Revit dependencies
 2. **Scanner**: A .NET tool for extracting assembly metadata from Revit installations
 
-## 🚀 Features
+## Features
 
 - **Multi-Version Support**: Analyze dependencies across Revit 2021-2026
 - **Smart Search**: Fast search functionality with FlexSearch integration
@@ -24,7 +27,7 @@ The Revit Dependency Scanner consists of two main components:
 - **Compatibility Analysis**: Identify potential version conflicts and compatibility issues
 - **Robust Error Handling**: Graceful handling of missing or undefined assembly data
 
-## 🏃‍♂️ Quick Start
+## Quick Start
 
 ### Frontend Application
 
@@ -52,7 +55,7 @@ npm run build
 npm start
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 revit-dependency-scanner/
@@ -78,7 +81,7 @@ revit-dependency-scanner/
     └── DS.Revit/           # Scanner project
 ```
 
-## 🔍 How It Works
+## How It Works
 
 ### Data Loading
 The application loads assembly metadata from JSON files in the `public/` directory. Each file contains detailed information about assemblies found in specific Revit versions, including:
@@ -121,7 +124,7 @@ The application provides detailed analysis for each assembly:
 - **PostCSS**: CSS processing
 - **Autoprefixer**: CSS vendor prefixes
 
-## 📊 Data Sources
+## Data Sources
 
 The application currently includes assembly metadata for:
 - **Revit 2021**: Legacy version with limited modern dependency support
@@ -131,7 +134,7 @@ The application currently includes assembly metadata for:
 
 *Note: Revit 2025 and 2026 data will be available in future updates*
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 No environment variables are required for basic operation. The application uses static JSON files for data.
@@ -141,7 +144,7 @@ No environment variables are required for basic operation. The application uses 
 - **Styling**: Modify Tailwind configuration in `tailwind.config.js`
 - **Search**: Adjust search parameters in `lib/search.ts`
 
-## 🚧 Scanner Component (Future Development)
+## Scanner Component (Future Development)
 
 The scanner component (`scanner/DS.Revit/`) is designed to:
 - Scan Revit installations for .NET assemblies
@@ -151,7 +154,7 @@ The scanner component (`scanner/DS.Revit/`) is designed to:
 
 *This component is currently under development.*
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -159,18 +162,18 @@ The scanner component (`scanner/DS.Revit/`) is designed to:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🆘 Support
+## Support
 
 If you encounter issues or have questions:
 1. Check the existing issues on GitHub
 2. Create a new issue with detailed information
 3. Include your Revit version and operating system
 
-## 🔮 Roadmap
+## Roadmap
 
 - [x] Mobile-responsive navigation with collapsible sidebar
 - [x] Enhanced UI with gradient accents and visual improvements
@@ -186,7 +189,7 @@ If you encounter issues or have questions:
 
 ---
 
-## ⚖️ Legal Notice
+## Legal Notice
 
 This tool extracts only assembly metadata (names, versions, public key tokens) from Revit installations for interoperability purposes. No proprietary code or resources are extracted or redistributed. 
 
