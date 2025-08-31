@@ -48,7 +48,7 @@ export async function searchDocumentation(
 
   const results = searchIndex!.search(query, { limit: 20 })
   
-  return results.map((resultIndex) => {
+  const searchResults = results.map((resultIndex) => {
     const index = typeof resultIndex === 'number' ? resultIndex : parseInt(resultIndex.toString())
     const item = documentation[index]
     const score = calculateRelevanceScore(query, item)
@@ -60,6 +60,9 @@ export async function searchDocumentation(
       matchedFields
     }
   }).sort((a, b) => b.score - a.score)
+
+  // Remove duplicates and prioritize primary location
+  return deduplicateResults(searchResults)
 }
 
 function calculateRelevanceScore(query: string, item: DocItem): number {
@@ -109,6 +112,29 @@ function calculateRelevanceScore(query: string, item: DocItem): number {
   })
 
   return score
+}
+
+function deduplicateResults(results: SearchResult[]): SearchResult[] {
+  const seen = new Map<string, SearchResult>()
+  
+  for (const result of results) {
+    const key = `${result.item.assemblyName || result.item.name}_${result.item.version || 'unknown'}`
+    
+    if (!seen.has(key)) {
+      seen.set(key, result)
+    } else {
+      const existing = seen.get(key)!
+      // Prioritize primary location (C:\Program Files\Autodesk\Revit XXXX\)
+      const isPrimaryLocation = result.item.location?.includes('C:\\Program Files\\Autodesk\\Revit')
+      const existingIsPrimary = existing.item.location?.includes('C:\\Program Files\\Autodesk\\Revit')
+      
+      if (isPrimaryLocation && !existingIsPrimary) {
+        seen.set(key, result)
+      }
+    }
+  }
+  
+  return Array.from(seen.values()).sort((a, b) => b.score - a.score)
 }
 
 function getMatchedFields(query: string, item: DocItem): string[] {
