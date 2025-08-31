@@ -108,12 +108,6 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-16 pt-8 border-t border-gray-200">
-          <p className="text-gray-600 text-sm">
-            Built with ❤️ for the Revit development community
-          </p>
-        </div>
       </div>
     </div>
   )
