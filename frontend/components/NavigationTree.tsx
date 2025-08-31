@@ -158,24 +158,25 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
         <div className="flex items-center justify-center h-32 text-gray-500">
           <div className="text-center">
             <div className="text-3xl mb-2">🚧</div>
-            <p className="text-sm font-medium">Revit {selectedVersion} Data</p>
-            <p className="text-xs">Coming Soon</p>
+            <p className="text-base font-bold" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Revit {selectedVersion} Data</p>
+            <p className="text-sm font-medium" style={{ fontFamily: 'Quan Light, sans-serif' }}>Coming Soon</p>
           </div>
         </div>
       ) : (
         filteredDependencies.map(item => (
           <div
             key={item.id}
-            className={`flex items-center px-4 py-3 cursor-pointer border-b border-gray-100 last:border-b-0 ${
+            data-item-id={item.id}
+            className={`flex items-center px-6 py-2 cursor-pointer ${
               selectedItem?.id === item.id
                 ? 'bg-blue-50 border-l-4 border-l-blue-500'
                 : 'hover:bg-gray-50'
             }`}
             onClick={() => onSelectItem(item)}
           >
-            <span className={`font-medium text-sm ${
+            <span className={`font-semibold text-base ${
               selectedItem?.id === item.id ? 'text-blue-700' : 'text-gray-900'
-            }`}>
+            }`} style={{ fontFamily: 'Quan Light, sans-serif' }}>
               {item.name}.dll
             </span>
           </div>
