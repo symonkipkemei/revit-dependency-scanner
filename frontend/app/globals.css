@@ -1,6 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Quan fonts */
+@font-face {
+  font-family: 'Quan Light';
+  src: url('/fonts/Quan-Light.woff') format('woff');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quan Bold';
+  src: url('/fonts/Quan-Bold.woff') format('woff');
+  font-weight: 700;
+  font-display: swap;
+}
 
 /* Custom scrollbar for better UX */
 ::-webkit-scrollbar {
