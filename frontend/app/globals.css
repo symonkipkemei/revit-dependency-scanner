@@ -4,17 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Quan fonts - using Inter as fallback since Quan fonts need to be purchased/licensed */
+/* Quan fonts */
 @font-face {
   font-family: 'Quan Light';
-  src: local('Inter Light'), local('Inter-Light');
+  src: url('/fonts/Quan-Light.woff') format('woff');
   font-weight: 300;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Quan Bold';
-  src: local('Inter Bold'), local('Inter-Bold');
+  src: url('/fonts/Quan-Bold.woff') format('woff');
   font-weight: 700;
   font-display: swap;
 }

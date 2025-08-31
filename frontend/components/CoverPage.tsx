@@ -14,27 +14,28 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
       <div className="max-w-4xl mx-auto text-center" style={{ fontFamily: 'Quan Light, sans-serif' }}>
         {/* Hero Section */}
         <div className="mb-8">
-          <h1 className="text-5xl md:text-6xl text-black mb-6 leading-tight" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
+          <h1 className="text-6xl md:text-7xl text-black mb-6 leading-tight" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
             Revit Dependency
             <span className="text-black block">Scanner</span>
           </h1>
-          
-          <p className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed max-w-3xl mx-auto">
-            Find compatible package versions across Revit installations. 
-            <span className="text-black font-medium"> Avoid dependency hell.</span>
+          <p className="text-2xl md:text-3xl text-gray-700 mb-4 leading-relaxed max-w-3xl mx-auto">
+            Find compatible package versions across Revit installations.
+          </p>
+          <p className="text-2xl md:text-3xl text-black font-medium mb-8 max-w-3xl mx-auto">
+            Avoid dependency hell.
           </p>
           
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600 mb-8">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-black rounded-full"></div>
+          <div className="flex flex-wrap justify-center gap-6 text-lg text-gray-700 mb-8">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-black rounded-full"></div>
               <span>Revit 2021-2024</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-gray-600 rounded-full"></div>
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-gray-600 rounded-full"></div>
               <span>Real Assembly Data</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-gray-800 rounded-full"></div>
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-gray-800 rounded-full"></div>
               <span>Compatibility Analysis</span>
             </div>
           </div>
@@ -46,13 +47,13 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
             onClick={onEnterApp}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className={`
-              group relative px-12 py-4 bg-black text-white rounded-full text-lg font-semibold
+            className="
+              group relative px-12 py-4 bg-black text-white rounded-full text-xl font-semibold
               transform transition-all duration-300 ease-out
               hover:bg-gray-800 hover:scale-105 hover:shadow-xl
               focus:outline-none focus:ring-4 focus:ring-gray-200
-              ${isHovered ? 'shadow-2xl' : 'shadow-lg'}
-            `}
+              shadow-lg
+            "
             style={{ fontFamily: 'Quan Bold, sans-serif' }}
           >
             <span className="relative z-10 flex items-center gap-3">
