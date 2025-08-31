@@ -80,9 +80,9 @@ export default function SearchBar({ onSearch, searchResults, onSelectResult, que
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search Package"
+            placeholder="Search .NET Package"
             style={{ fontFamily: 'Quan Light, sans-serif' }}
-            className="flex-1 px-3 py-2 border border-gray-300 focus:ring-1 focus:ring-gray-400 focus:border-gray-400 text-sm"
+            className="flex-1 px-3 py-2 border border-gray-300 focus:ring-1 focus:ring-gray-400 focus:border-gray-400 text-base"
             value={query}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}

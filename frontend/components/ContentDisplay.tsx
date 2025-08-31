@@ -70,8 +70,11 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Header */}
         <div className="mb-8">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
-              {item.name} <span className="text-2xl font-light text-gray-500 ml-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>v{item.version || '1.0.0'}</span>
+            <h1 className="text-4xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
+              {item.assemblyName || item.name}
+              <span className="text-3xl font-light text-gray-500 ml-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>
+                v{item.version || '0.0.0.0'}
+              </span>
             </h1>
             <div className="flex items-center gap-3 mb-4">
               <div className={`px-4 py-2 rounded-lg text-sm font-medium ${getTypeColor(item.type)}`}>
