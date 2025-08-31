@@ -17,6 +17,7 @@ export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [selectedVersion, setSelectedVersion] = useState<string>('2023')
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   useEffect(() => {
     const loadData = async () => {
@@ -107,7 +108,7 @@ export default function SearchPage() {
     setSelectedItem(item)
     setSearchQuery('')
     setSearchResults([])
-    
+    setIsSidebarOpen(false)
     // Auto-scroll to the selected item in navigation tree
     setTimeout(() => {
       const element = document.querySelector(`[data-item-id="${item.id}"]`)
@@ -156,6 +157,16 @@ export default function SearchPage() {
                 className="w-6 h-6 sm:w-8 sm:h-8"
               />
             </button>
+            {/* Mobile Menu Toggle */}
+            <button 
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="lg:hidden hover:opacity-70 transition-opacity px-3 py-2 text-white flex items-center"
+              title="Toggle Navigation"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
             <div className="flex overflow-x-auto">
               {['2021', '2022', '2023', '2024', '2025', '2026'].map((version) => (
                 <button
@@ -180,9 +191,34 @@ export default function SearchPage() {
       </div>
 
       <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
+        {/* Mobile Overlay */}
+        {isSidebarOpen && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
+        
         {/* Sidebar */}
-        <div className="bg-white border-r border-gray-200 flex flex-col overflow-y-auto scrollbar-custom w-full lg:w-80 xl:w-96">
+        <div className={`bg-white border-r border-gray-200 flex flex-col overflow-y-auto scrollbar-custom transition-transform duration-300 ease-in-out z-50 ${
+          isSidebarOpen 
+            ? 'fixed inset-y-0 left-0 w-80 lg:relative lg:w-80 xl:w-96' 
+            : 'hidden lg:flex lg:w-80 xl:w-96'
+        }`}>
           <div className="sticky top-0 bg-white z-10 p-4">
+            {/* Mobile Close Button */}
+            <div className="flex justify-between items-center mb-4 lg:hidden">
+              <h2 className="text-lg font-semibold text-gray-800">Navigation</h2>
+              <button 
+                onClick={() => setIsSidebarOpen(false)}
+                className="p-2 hover:bg-gray-100 rounded-md"
+                title="Close Navigation"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
             <SearchBar 
               onSearch={handleSearch}
               searchResults={searchResults}
