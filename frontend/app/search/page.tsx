@@ -120,7 +120,7 @@ export default function SearchPage() {
               <img 
                 src="/icons/ICON-Grey.png" 
                 alt="Home" 
-                className="w-6 h-6"
+                className="w-8 h-8"
               />
             </button>
             {['2021', '2022', '2023', '2024', '2025', '2026'].map((version) => (
