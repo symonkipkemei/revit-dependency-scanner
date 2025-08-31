@@ -12,7 +12,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
     return (
       <div className="flex items-center justify-center h-full text-gray-500">
         <div className="text-center">
-          <div className="text-6xl mb-4">🚧</div>
+          <div className="text-6xl mb-4"></div>
           <h2 className="text-xl font-semibold mb-2" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Revit Assembly Data</h2>
           <p className="text-lg font-medium mb-1" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Coming Soon</p>
           <p className="text-sm" style={{ fontFamily: 'Quan Light, sans-serif' }}>Assembly metadata for Revit {selectedVersion || '2025'} will be available in a future update.</p>
@@ -21,23 +21,6 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
     )
   }
 
-  const getTypeIcon = (type?: string) => {
-    switch (type) {
-      case 'autodesk': return '🏗️'
-      case 'third-party': return '📦'
-      case 'aws': return '☁️'
-      case 'microsoft': return '🪟'
-      case 'system': return '⚙️'
-      // Legacy support
-      case 'namespace': return '📁'
-      case 'class': return '🏛️'
-      case 'interface': return '🔌'
-      case 'method': return '⚙️'
-      case 'property': return '🏷️'
-      case 'enum': return '📋'
-      default: return '📄'
-    }
-  }
 
   const getTypeColor = (type?: string) => {
     switch (type) {
@@ -82,7 +65,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
   }
 
   return (
-    <div className="h-full overflow-y-auto">
+    <div className="h-full overflow-y-auto scrollbar-custom">
       <div className="max-w-6xl mx-auto p-8">
         {/* Header */}
         <div className="mb-8">
@@ -101,7 +84,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
 
         {/* Assembly Full Identity */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>🔍 Assembly Identity</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Assembly Identity</h2>
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -150,7 +133,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
 
         {/* Strong Naming Status */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>🔐 Strong Naming</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Strong Naming</h2>
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
             <div className="flex items-center space-x-3">
               <div className={`w-3 h-3 rounded-full ${item.publicKeyToken ? 'bg-green-500' : 'bg-red-500'}`}></div>
@@ -170,7 +153,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* NuGet Package Information */}
         {item.nugetPackage && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>📦 NuGet Package</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>NuGet Package</h2>
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -193,7 +176,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Referenced Assemblies */}
         {isDependency(item) && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>🔗 Referenced Assemblies</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Referenced Assemblies</h2>
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
               <div className="space-y-3">
                 {item.referencedAssemblies && item.referencedAssemblies.length > 0 ? (
@@ -222,7 +205,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
 
         {/* Installation Location */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>📍 Installation Location</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Installation Location</h2>
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
             <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm break-all">
               {item.location}
@@ -232,7 +215,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
 
         {/* Version Compatibility & Binding Redirects */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>🔄 Version Compatibility</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Version Compatibility</h2>
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -344,7 +327,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Recommendations */}
         {item.recommendations && item.recommendations.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>💡 Recommendations</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Recommendations</h2>
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
               <ul className="space-y-2">
                 {item.recommendations.map((rec, index) => (
@@ -361,7 +344,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Conflicts */}
         {item.conflicts && item.conflicts.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>⚠️ Known Conflicts</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Known Conflicts</h2>
             <div className="space-y-4">
               {item.conflicts.map((conflict, index) => (
                 <div key={index} className={`border rounded-lg p-4 ${
@@ -373,7 +356,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
                     <span className={`text-lg ${
                       conflict.severity === 'error' ? 'text-red-600' : 'text-yellow-600'
                     }`}>
-                      {conflict.severity === 'error' ? '🚫' : '⚠️'}
+                      {conflict.severity === 'error' ? 'ERROR' : 'WARNING'}
                     </span>
                     <div className="flex-1">
                       <h3 className={`font-medium ${
