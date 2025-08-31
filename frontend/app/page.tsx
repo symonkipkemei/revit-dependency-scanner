@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import SearchBar from '@/components/SearchBar'
 import NavigationTree from '@/components/NavigationTree'
 import ContentDisplay from '@/components/ContentDisplay'
+import CoverPage from '@/components/CoverPage'
 import { DocItem, SearchResult } from '@/types/documentation'
 import { searchDocumentation } from '@/lib/search'
 import { loadDocumentation } from '@/lib/data-loader'
@@ -15,6 +16,8 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const [selectedVersion, setSelectedVersion] = useState<string>('2023')
+  const [showCover, setShowCover] = useState(true)
+  const searchPageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const loadData = async () => {
@@ -82,16 +85,42 @@ export default function Home() {
     setSearchResults([])
   }
 
+  const handleEnterApp = () => {
+    setShowCover(false)
+    // Smooth scroll to search page after state update
+    setTimeout(() => {
+      searchPageRef.current?.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      })
+    }, 100)
+  }
+
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-lg">Loading Revit dependencies...</div>
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+        <div className="text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4 shadow-lg animate-pulse">
+            <span className="text-2xl text-white">🏗️</span>
+          </div>
+          <div className="text-lg text-gray-700">Loading Revit dependencies...</div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="min-h-screen">
+      {/* Cover Page */}
+      {showCover && (
+        <CoverPage onEnterApp={handleEnterApp} />
+      )}
+      
+      {/* Search Application */}
+      <div 
+        ref={searchPageRef}
+        className={`${showCover ? 'min-h-screen' : ''} flex flex-col h-screen bg-gray-50`}
+      >
       {/* Top Bar */}
       <div className="bg-white border-b border-gray-200 p-4">
         <div className="flex items-center justify-between mb-4">
@@ -147,6 +176,7 @@ export default function Home() {
         <div className="flex-1 overflow-y-auto">
           <ContentDisplay item={selectedItem} selectedVersion={selectedVersion} />
         </div>
+      </div>
       </div>
     </div>
   )
