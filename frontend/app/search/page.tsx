@@ -95,7 +95,7 @@ export default function SearchPage() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-black rounded-2xl mb-4 shadow-lg animate-pulse">
             <span className="text-2xl text-white">🏗️</span>
           </div>
-          <div className="text-lg text-black" style={{ fontFamily: 'Quan Light, sans-serif' }}>Loading Revit dependencies...</div>
+          <div className="text-lg text-black font-medium" style={{ fontFamily: 'Quan Light, sans-serif' }}>Loading Revit dependencies...</div>
         </div>
       </div>
     )
@@ -114,11 +114,11 @@ export default function SearchPage() {
             >
               🏗️
             </button>
-            <h1 className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
+            <h1 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
               Revit Dependency Scanner
             </h1>
           </div>
-          <p className="text-sm text-gray-600" style={{ fontFamily: 'Quan Light, sans-serif' }}>
+          <p className="text-base text-gray-600 font-medium" style={{ fontFamily: 'Quan Light, sans-serif' }}>
             Find compatible package versions. Avoid dependency hell.
           </p>
         </div>
@@ -129,7 +129,7 @@ export default function SearchPage() {
             <button
               key={version}
               onClick={() => setSelectedVersion(version)}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-md text-base font-semibold transition-colors ${
                 selectedVersion === version
                   ? 'bg-white text-gray-900 shadow-sm'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
