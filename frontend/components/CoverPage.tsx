@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { getAssetPath } from '@/lib/asset-path'
 
 interface CoverPageProps {
   onEnterApp: () => void
@@ -16,7 +17,7 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-8">
           <div className="flex-shrink-0 order-1 lg:order-none">
             <img 
-              src="/icons/ICON-Black.png" 
+              src={getAssetPath('/icons/ICON-Black.png')}
               alt="Revit Dependency Scanner" 
               className="w-32 h-auto sm:w-48 md:w-64 lg:w-72 xl:w-96 object-contain animate-spin"
               style={{ animationDuration: '10s' }}

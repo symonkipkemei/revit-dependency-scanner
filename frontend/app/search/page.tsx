@@ -8,6 +8,7 @@ import ContentDisplay from '@/components/ContentDisplay'
 import { DocItem, SearchResult } from '@/types/documentation'
 import { searchDocumentation } from '@/lib/search'
 import { loadDocumentation } from '@/lib/data-loader'
+import { getAssetPath } from '@/lib/asset-path'
 
 export default function SearchPage() {
   const router = useRouter()
@@ -128,7 +129,7 @@ export default function SearchPage() {
         <div className="text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-black rounded-2xl mb-4 shadow-lg animate-pulse">
             <img 
-              src="/icons/ICON-Grey.png" 
+              src={getAssetPath('/icons/ICON-Grey.png')}
               alt="Loading" 
               className="w-8 h-8"
             />
@@ -152,7 +153,7 @@ export default function SearchPage() {
               title="Back to Home"
             >
               <img 
-                src="/icons/ICON-Grey.png" 
+                src={getAssetPath('/icons/ICON-Grey.png')}
                 alt="Home" 
                 className="w-6 h-6 sm:w-8 sm:h-8"
               />
