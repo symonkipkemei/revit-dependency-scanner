@@ -10,10 +10,10 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-8">
+    <div className="h-screen bg-white flex items-center justify-center p-8">
       <div className="max-w-4xl mx-auto text-center" style={{ fontFamily: 'Quan Light, sans-serif' }}>
         {/* Hero Section */}
-        <div className="mb-12">
+        <div className="mb-8">
           <h1 className="text-5xl md:text-6xl text-black mb-6 leading-tight" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
             Revit Dependency
             <span className="text-black block">Scanner</span>
@@ -24,7 +24,7 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
             <span className="text-black font-medium"> Avoid dependency hell.</span>
           </p>
           
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600 mb-12">
+          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600 mb-8">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-black rounded-full"></div>
               <span>Revit 2021-2024</span>
@@ -41,7 +41,7 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
         </div>
 
         {/* CTA Button */}
-        <div className="mb-16">
+        <div>
           <button
             onClick={onEnterApp}
             onMouseEnter={() => setIsHovered(true)}
