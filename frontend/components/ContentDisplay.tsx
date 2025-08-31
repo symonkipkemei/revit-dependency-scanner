@@ -70,7 +70,9 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Header */}
         <div className="mb-8">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Quan Bold, sans-serif' }}>{item.name}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
+              {item.name} <span className="text-2xl font-light text-gray-500 ml-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>v{item.version || '1.0.0'}</span>
+            </h1>
             <div className="flex items-center gap-3 mb-4">
               <div className={`px-4 py-2 rounded-lg text-sm font-medium ${getTypeColor(item.type)}`}>
                 {item.type ? item.type.charAt(0).toUpperCase() + item.type.slice(1) : 'Unknown'} dependency
@@ -122,7 +124,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
             </div>
             
             {/* Full Assembly Identity */}
-            <div className="mt-6 pt-4 border-t border-gray-300">
+            <div className="mt-6 pt-4">
               <label className="block text-sm font-medium text-gray-700 mb-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>Full Assembly Identity</label>
               <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm break-all">
                 {item.assemblyName || item.name}, Version={item.version || '0.0.0.0'}, Culture=neutral, PublicKeyToken={item.publicKeyToken || 'null'}
@@ -183,12 +185,12 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
                   item.referencedAssemblies.map((ref, index) => (
                     <div key={index} className="bg-white border border-gray-300 rounded p-3">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-gray-900" style={{ fontFamily: 'Quan Light, sans-serif' }}>{ref.name}</span>
+                        <span className="font-bold text-gray-900" style={{ fontFamily: 'Quan Bold, sans-serif' }}>{ref.name}</span>
                         <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
                           v{ref.version}
                         </span>
                       </div>
-                      <div className="text-xs text-gray-500 font-mono" style={{ fontFamily: 'Quan Light, sans-serif' }}>
+                      <div className="text-sm text-gray-700 font-mono font-normal" style={{ fontFamily: 'Quan Light, sans-serif' }}>
                         PublicKeyToken: {ref.publicKeyToken || 'None'}
                       </div>
                     </div>
