@@ -48,23 +48,36 @@ export async function searchDocumentation(
 
   const results = searchIndex!.search(query, { limit: 20 })
   
-  return results.map((resultIndex) => {
-    const index = typeof resultIndex === 'number' ? resultIndex : parseInt(resultIndex.toString())
-    const item = documentation[index]
-    const score = calculateRelevanceScore(query, item)
-    const matchedFields = getMatchedFields(query, item)
-    
-    return {
-      item,
-      score,
-      matchedFields
-    }
-  }).sort((a, b) => b.score - a.score)
+  const searchResults = results
+    .map((resultIndex) => {
+      const index = typeof resultIndex === 'number' ? resultIndex : parseInt(resultIndex.toString())
+      const item = documentation[index]
+      
+      // Skip if item is undefined or null
+      if (!item) return null
+      
+      const score = calculateRelevanceScore(query, item)
+      const matchedFields = getMatchedFields(query, item)
+      
+      return {
+        item,
+        score,
+        matchedFields
+      }
+    })
+    .filter((result): result is SearchResult => result !== null)
+    .sort((a, b) => b.score - a.score)
+
+  // Remove duplicates and prioritize primary location
+  return deduplicateResults(searchResults)
 }
 
 function calculateRelevanceScore(query: string, item: DocItem): number {
   const queryLower = query.toLowerCase()
   let score = 0
+
+  // Check if item and item.name exist before accessing
+  if (!item || !item.name) return 0
 
   // Exact name match gets highest score
   if (item.name.toLowerCase() === queryLower) score += 100
@@ -83,7 +96,7 @@ function calculateRelevanceScore(query: string, item: DocItem): number {
   if (item.fullName && item.fullName.toLowerCase().includes(queryLower)) score += 30
 
   // Description match
-  if (item.description.toLowerCase().includes(queryLower)) score += 20
+  if (item.description && item.description.toLowerCase().includes(queryLower)) score += 20
 
   // Type match
   if (item.type && item.type.toLowerCase().includes(queryLower)) score += 15
@@ -111,13 +124,39 @@ function calculateRelevanceScore(query: string, item: DocItem): number {
   return score
 }
 
+function deduplicateResults(results: SearchResult[]): SearchResult[] {
+  const seen = new Map<string, SearchResult>()
+  
+  for (const result of results) {
+    const key = `${result.item.assemblyName || result.item.name}_${result.item.version || 'unknown'}`
+    
+    if (!seen.has(key)) {
+      seen.set(key, result)
+    } else {
+      const existing = seen.get(key)!
+      // Prioritize primary location (C:\Program Files\Autodesk\Revit XXXX\)
+      const isPrimaryLocation = result.item.location?.includes('C:\\Program Files\\Autodesk\\Revit')
+      const existingIsPrimary = existing.item.location?.includes('C:\\Program Files\\Autodesk\\Revit')
+      
+      if (isPrimaryLocation && !existingIsPrimary) {
+        seen.set(key, result)
+      }
+    }
+  }
+  
+  return Array.from(seen.values()).sort((a, b) => b.score - a.score)
+}
+
 function getMatchedFields(query: string, item: DocItem): string[] {
   const queryLower = query.toLowerCase()
   const matchedFields: string[] = []
 
-  if (item.name.toLowerCase().includes(queryLower)) matchedFields.push('name')
+  // Check if item and properties exist before accessing
+  if (!item) return matchedFields
+
+  if (item.name && item.name.toLowerCase().includes(queryLower)) matchedFields.push('name')
   if (item.fullName && item.fullName.toLowerCase().includes(queryLower)) matchedFields.push('fullName')
-  if (item.description.toLowerCase().includes(queryLower)) matchedFields.push('description')
+  if (item.description && item.description.toLowerCase().includes(queryLower)) matchedFields.push('description')
   if (item.type && item.type.toLowerCase().includes(queryLower)) matchedFields.push('type')
 
   return matchedFields

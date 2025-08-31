@@ -1,6 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Quan Light';
+  src: url('/fonts/Quan-Light.woff2') format('woff2'),
+       url('/fonts/Quan-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quan Bold';
+  src: url('/fonts/Quan-Bold.woff2') format('woff2'),
+       url('/fonts/Quan-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Custom scrollbar styles */
+.scrollbar-custom {
+  scrollbar-width: thick;
+  scrollbar-color: #6b7280 #f3f4f6;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 16px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: #6b7280;
+  border-radius: 8px;
+  border: 2px solid #f3f4f6;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+.scrollbar-custom::-webkit-scrollbar-button {
+  display: block;
+  height: 16px;
+  background: #6b7280;
+  border-radius: 4px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-button:vertical:start:decrement {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M7 14l5-5 5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-button:vertical:end:increment {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-button:hover {
+  background-color: #4b5563;
+}
 
 /* Custom scrollbar for better UX */
 ::-webkit-scrollbar {
