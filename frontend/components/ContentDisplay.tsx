@@ -13,9 +13,9 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
       <div className="flex items-center justify-center h-full text-gray-500">
         <div className="text-center">
           <div className="text-6xl mb-4">🚧</div>
-          <h2 className="text-xl font-semibold mb-2">Revit Assembly Data</h2>
-          <p className="text-lg font-medium mb-1">Coming Soon</p>
-          <p className="text-sm">Assembly metadata for Revit {selectedVersion || '2025'} will be available in a future update.</p>
+          <h2 className="text-xl font-semibold mb-2" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Revit Assembly Data</h2>
+          <p className="text-lg font-medium mb-1" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Coming Soon</p>
+          <p className="text-sm" style={{ fontFamily: 'Quan Light, sans-serif' }}>Assembly metadata for Revit {selectedVersion || '2025'} will be available in a future update.</p>
         </div>
       </div>
     )
@@ -87,7 +87,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Header */}
         <div className="mb-8">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-3">{item.name}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Quan Bold, sans-serif' }}>{item.name}</h1>
             <div className="flex items-center gap-3 mb-4">
               <div className={`px-4 py-2 rounded-lg text-sm font-medium ${getTypeColor(item.type)}`}>
                 {item.type ? item.type.charAt(0).toUpperCase() + item.type.slice(1) : 'Unknown'} dependency
@@ -101,11 +101,11 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
 
         {/* Assembly Full Identity */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">🔍 Assembly Identity</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>🔍 Assembly Identity</h2>
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Assembly Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>Assembly Name</label>
                 <div className="bg-white border border-gray-300 rounded px-3 py-2">
                   <code className="font-mono text-sm">
                     {item.assemblyName || item.name}
@@ -113,7 +113,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Version</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>Version</label>
                 <div className="bg-white border border-gray-300 rounded px-3 py-2">
                   <code className="font-mono text-sm">
                     {item.version || 'Not specified'}
@@ -121,7 +121,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Public Key Token</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>Public Key Token</label>
                 <div className="bg-white border border-gray-300 rounded px-3 py-2">
                   <code className="font-mono text-sm">
                     {item.publicKeyToken || 'None (unsigned)'}
@@ -129,7 +129,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Culture</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>Culture</label>
                 <div className="bg-white border border-gray-300 rounded px-3 py-2">
                   <code className="font-mono text-sm">
                     neutral
@@ -140,7 +140,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
             
             {/* Full Assembly Identity */}
             <div className="mt-6 pt-4 border-t border-gray-300">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Full Assembly Identity</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>Full Assembly Identity</label>
               <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm break-all">
                 {item.assemblyName || item.name}, Version={item.version || '0.0.0.0'}, Culture=neutral, PublicKeyToken={item.publicKeyToken || 'null'}
               </code>
@@ -150,15 +150,15 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
 
         {/* Strong Naming Status */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">🔐 Strong Naming</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>🔐 Strong Naming</h2>
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
             <div className="flex items-center space-x-3">
               <div className={`w-3 h-3 rounded-full ${item.publicKeyToken ? 'bg-green-500' : 'bg-red-500'}`}></div>
-              <span className="font-medium">
+              <span className="font-medium" style={{ fontFamily: 'Quan Light, sans-serif' }}>
                 {item.publicKeyToken ? 'Strong-named assembly' : 'Unsigned assembly'}
               </span>
             </div>
-            <p className="text-sm text-gray-600 mt-2">
+            <p className="text-sm text-gray-600 mt-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>
               {item.publicKeyToken 
                 ? 'This assembly is digitally signed and has a strong name, providing version and tamper protection.'
                 : 'This assembly is not strong-named and may be subject to version conflicts.'
@@ -170,17 +170,17 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* NuGet Package Information */}
         {item.nugetPackage && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">📦 NuGet Package</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>📦 NuGet Package</h2>
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Package Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1" style={{ fontFamily: 'Quan Light, sans-serif' }}>Package Name</label>
                   <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
                     {item.nugetPackage}
                   </code>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Package Version</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1" style={{ fontFamily: 'Quan Light, sans-serif' }}>Package Version</label>
                   <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm">
                     {item.nugetVersion || 'Not specified'}
                   </code>
@@ -193,25 +193,25 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Referenced Assemblies */}
         {isDependency(item) && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">🔗 Referenced Assemblies</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>🔗 Referenced Assemblies</h2>
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
               <div className="space-y-3">
                 {item.referencedAssemblies && item.referencedAssemblies.length > 0 ? (
                   item.referencedAssemblies.map((ref, index) => (
                     <div key={index} className="bg-white border border-gray-300 rounded p-3">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-gray-900">{ref.name}</span>
+                        <span className="font-medium text-gray-900" style={{ fontFamily: 'Quan Light, sans-serif' }}>{ref.name}</span>
                         <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
                           v{ref.version}
                         </span>
                       </div>
-                      <div className="text-xs text-gray-500 font-mono">
+                      <div className="text-xs text-gray-500 font-mono" style={{ fontFamily: 'Quan Light, sans-serif' }}>
                         PublicKeyToken: {ref.publicKeyToken || 'None'}
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-4 text-gray-500">
+                  <div className="text-center py-4 text-gray-500" style={{ fontFamily: 'Quan Light, sans-serif' }}>
                     No referenced assemblies found
                   </div>
                 )}
@@ -222,7 +222,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
 
         {/* Installation Location */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">📍 Installation Location</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>📍 Installation Location</h2>
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
             <code className="block bg-white border border-gray-300 rounded px-3 py-2 font-mono text-sm break-all">
               {item.location}
@@ -232,11 +232,11 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
 
         {/* Version Compatibility & Binding Redirects */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">🔄 Version Compatibility</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>🔄 Version Compatibility</h2>
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Supported Version Range</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>Supported Version Range</label>
                 <div className="bg-white border border-gray-300 rounded px-3 py-2">
                   <code className="font-mono text-sm">
                     {item.nugetVersion ? `>= ${item.nugetVersion}` : 'Any version'}
@@ -244,7 +244,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Binding Redirect Suggestion</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>Binding Redirect Suggestion</label>
                 <div className="bg-white border border-gray-300 rounded px-3 py-2">
                   <code className="font-mono text-sm text-blue-600">
                     {item.version ? `newVersion="${item.version}"` : 'Not required'}
@@ -254,7 +254,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
             </div>
             {item.nugetPackage && (
               <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded">
-                <h4 className="font-medium text-blue-900 mb-2">Suggested app.config binding redirect:</h4>
+                <h4 className="font-medium text-blue-900 mb-2" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Suggested app.config binding redirect:</h4>
                 <code className="block bg-white border border-blue-300 rounded px-3 py-2 font-mono text-xs overflow-x-auto">
 {`<runtime>
   <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
@@ -275,7 +275,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Syntax */}
         {item.syntax && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Syntax</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Syntax</h2>
             <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
               <code className="font-mono text-sm">{item.syntax}</code>
             </div>
@@ -285,14 +285,14 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Parameters */}
         {item.parameters && item.parameters.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Parameters</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Parameters</h2>
             <div className="overflow-x-auto">
               <table className="w-full border border-gray-200 rounded-lg">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-900 border-b">Name</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-900 border-b">Type</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-900 border-b">Description</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-900 border-b" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Name</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-900 border-b" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Type</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-gray-900 border-b" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Description</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -315,7 +315,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
                           {param.type}
                         </code>
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-700">
+                      <td className="px-4 py-3 text-sm text-gray-700" style={{ fontFamily: 'Quan Light, sans-serif' }}>
                         {param.description}
                         {param.defaultValue && (
                           <div className="mt-1 text-xs text-gray-500">
@@ -334,7 +334,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Return Type */}
         {item.returnType && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Returns</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Returns</h2>
             <div className="bg-gray-50 p-4 rounded-lg">
               <code className="font-mono text-sm text-blue-600">{item.returnType}</code>
             </div>
@@ -344,13 +344,13 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Recommendations */}
         {item.recommendations && item.recommendations.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">💡 Recommendations</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>💡 Recommendations</h2>
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
               <ul className="space-y-2">
                 {item.recommendations.map((rec, index) => (
                   <li key={index} className="flex items-start space-x-2">
                     <span className="text-green-600 mt-1">✓</span>
-                    <span className="text-green-800">{rec}</span>
+                    <span className="text-green-800" style={{ fontFamily: 'Quan Light, sans-serif' }}>{rec}</span>
                   </li>
                 ))}
               </ul>
@@ -361,7 +361,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Conflicts */}
         {item.conflicts && item.conflicts.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">⚠️ Known Conflicts</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>⚠️ Known Conflicts</h2>
             <div className="space-y-4">
               {item.conflicts.map((conflict, index) => (
                 <div key={index} className={`border rounded-lg p-4 ${
@@ -378,12 +378,12 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
                     <div className="flex-1">
                       <h3 className={`font-medium ${
                         conflict.severity === 'error' ? 'text-red-900' : 'text-yellow-900'
-                      }`}>
+                      }`} style={{ fontFamily: 'Quan Bold, sans-serif' }}>
                         Conflicts with: {conflict.conflictsWith}
                       </h3>
                       <p className={`text-sm mt-1 ${
                         conflict.severity === 'error' ? 'text-red-700' : 'text-yellow-700'
-                      }`}>
+                      }`} style={{ fontFamily: 'Quan Light, sans-serif' }}>
                         {conflict.reason}
                       </p>
                       {conflict.solution && (
@@ -392,7 +392,7 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
                             ? 'bg-red-100 text-red-800' 
                             : 'bg-yellow-100 text-yellow-800'
                         }`}>
-                          <strong>Solution:</strong> {conflict.solution}
+                          <strong style={{ fontFamily: 'Quan Bold, sans-serif' }}>Solution:</strong> <span style={{ fontFamily: 'Quan Light, sans-serif' }}>{conflict.solution}</span>
                         </div>
                       )}
                     </div>
@@ -406,14 +406,14 @@ export default function ContentDisplay({ item, selectedVersion }: ContentDisplay
         {/* Examples */}
         {item.examples && item.examples.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Examples</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Examples</h2>
             <div className="space-y-6">
               {item.examples.map((example, index) => (
                 <div key={index} className="border border-gray-200 rounded-lg overflow-hidden">
                   <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
-                    <h3 className="font-medium text-gray-900">{example.title}</h3>
+                    <h3 className="font-medium text-gray-900" style={{ fontFamily: 'Quan Bold, sans-serif' }}>{example.title}</h3>
                     {example.description && (
-                      <p className="text-sm text-gray-600 mt-1">{example.description}</p>
+                      <p className="text-sm text-gray-600 mt-1" style={{ fontFamily: 'Quan Light, sans-serif' }}>{example.description}</p>
                     )}
                   </div>
                   <div className="bg-gray-900 text-gray-100 p-4 overflow-x-auto">

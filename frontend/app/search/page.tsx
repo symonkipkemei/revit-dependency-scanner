@@ -95,7 +95,7 @@ export default function SearchPage() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-black rounded-2xl mb-4 shadow-lg animate-pulse">
             <span className="text-2xl text-white">🏗️</span>
           </div>
-          <div className="text-lg text-black">Loading Revit dependencies...</div>
+          <div className="text-lg text-black" style={{ fontFamily: 'Quan Light, sans-serif' }}>Loading Revit dependencies...</div>
         </div>
       </div>
     )
@@ -118,7 +118,7 @@ export default function SearchPage() {
               Revit Dependency Scanner
             </h1>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600" style={{ fontFamily: 'Quan Light, sans-serif' }}>
             Find compatible package versions. Avoid dependency hell.
           </p>
         </div>
@@ -134,6 +134,7 @@ export default function SearchPage() {
                   ? 'bg-white text-gray-900 shadow-sm'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
               }`}
+              style={{ fontFamily: 'Quan Light, sans-serif' }}
             >
               Revit {version}
             </button>

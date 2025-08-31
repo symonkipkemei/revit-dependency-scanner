@@ -158,8 +158,8 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
         <div className="flex items-center justify-center h-32 text-gray-500">
           <div className="text-center">
             <div className="text-3xl mb-2">🚧</div>
-            <p className="text-sm font-medium">Revit {selectedVersion} Data</p>
-            <p className="text-xs">Coming Soon</p>
+            <p className="text-sm font-medium" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Revit {selectedVersion} Data</p>
+            <p className="text-xs" style={{ fontFamily: 'Quan Light, sans-serif' }}>Coming Soon</p>
           </div>
         </div>
       ) : (
@@ -175,7 +175,7 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
           >
             <span className={`font-medium text-sm ${
               selectedItem?.id === item.id ? 'text-blue-700' : 'text-gray-900'
-            }`}>
+            }`} style={{ fontFamily: 'Quan Light, sans-serif' }}>
               {item.name}.dll
             </span>
           </div>
