@@ -166,6 +166,7 @@ export default function NavigationTree({ documentation, onSelectItem, selectedIt
         filteredDependencies.map(item => (
           <div
             key={item.id}
+            data-item-id={item.id}
             className={`flex items-center px-6 py-2 cursor-pointer ${
               selectedItem?.id === item.id
                 ? 'bg-blue-50 border-l-4 border-l-blue-500'

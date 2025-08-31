@@ -107,6 +107,14 @@ export default function SearchPage() {
     setSelectedItem(item)
     setSearchQuery('')
     setSearchResults([])
+    
+    // Auto-scroll to the selected item in navigation tree
+    setTimeout(() => {
+      const element = document.querySelector(`[data-item-id="${item.id}"]`)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }, 100)
   }
 
   const handleBackToHome = () => {
