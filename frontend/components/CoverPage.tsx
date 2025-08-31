@@ -70,7 +70,6 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
           </button>
         </div>
 
-
       </div>
     </div>
   )

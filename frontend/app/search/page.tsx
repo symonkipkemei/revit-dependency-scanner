@@ -93,7 +93,11 @@ export default function SearchPage() {
       <div className="flex items-center justify-center min-h-screen bg-white">
         <div className="text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-black rounded-2xl mb-4 shadow-lg animate-pulse">
-            <span className="text-2xl text-white">🏗️</span>
+            <img 
+              src="/icons/ICON-Grey.png" 
+              alt="Loading" 
+              className="w-8 h-8"
+            />
           </div>
           <div className="text-lg text-black font-medium" style={{ fontFamily: 'Quan Light, sans-serif' }}>Loading Revit dependencies...</div>
         </div>
@@ -104,27 +108,34 @@ export default function SearchPage() {
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       {/* Top Bar */}
-      <div className="bg-black border-b border-gray-200">
+      <div style={{ backgroundColor: 'rgb(40, 40, 42)' }}>
         {/* Combined Home Icon and Version Tabs */}
-        <div className="flex items-center bg-black p-1">
-          <button 
-            onClick={handleBackToHome}
-            className="text-2xl hover:opacity-70 transition-opacity px-3 py-2 text-white"
-            title="Back to Home"
-          >
-            🏗️
-          </button>
-          <div className="flex space-x-1 flex-1">
+        <div className="flex items-center" style={{ backgroundColor: 'rgb(40, 40, 42)' }}>
+          <div className="flex flex-1">
+            <button 
+              onClick={handleBackToHome}
+              className="hover:opacity-70 transition-opacity px-6 py-2 text-white flex items-center"
+              title="Back to Home"
+            >
+              <img 
+                src="/icons/ICON-Grey.png" 
+                alt="Home" 
+                className="w-6 h-6"
+              />
+            </button>
             {['2021', '2022', '2023', '2024', '2025', '2026'].map((version) => (
               <button
                 key={version}
                 onClick={() => setSelectedVersion(version)}
-                className={`px-4 py-2 rounded-md text-base font-semibold transition-colors ${
+                className={`px-6 py-2 text-base font-semibold transition-colors relative ${
                   selectedVersion === version
-                    ? 'bg-white text-black shadow-sm'
-                    : 'text-white hover:text-gray-200 hover:bg-gray-800'
+                    ? 'bg-black border-b-4 border-white'
+                    : 'hover:bg-gray-600'
                 }`}
-                style={{ fontFamily: 'Quan Light, sans-serif' }}
+                style={{ 
+                  fontFamily: 'Quan Light, sans-serif',
+                  color: selectedVersion === version ? 'white' : 'rgb(196, 196, 198)'
+                }}
               >
                 Revit {version}
               </button>
@@ -135,7 +146,7 @@ export default function SearchPage() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <div className="w-80 bg-white border-r border-gray-200 flex flex-col overflow-y-auto scrollbar-custom">
+        <div className="bg-white border-r border-gray-200 flex flex-col overflow-y-auto scrollbar-custom">
           <div className="sticky top-0 bg-white z-10 p-4">
             <SearchBar 
               onSearch={handleSearch}
@@ -154,10 +165,21 @@ export default function SearchPage() {
           </div>
         </div>
 
-        {/* Main content */}
-        <div className="flex-1 overflow-y-auto bg-white">
-          <ContentDisplay item={selectedItem} selectedVersion={selectedVersion} />
+        {/* Main Content */}
+        <div className="flex-1 overflow-y-auto scrollbar-custom">
+          <ContentDisplay 
+            item={selectedItem}
+            selectedVersion={selectedVersion}
+          />
         </div>
+      </div>
+
+      {/* Footer */}
+      <div className="bg-gray-100 border-t border-gray-200 px-4 py-2 text-center">
+        <p className="text-sm text-gray-600" style={{ fontFamily: 'Quan Light, sans-serif' }}>
+          Documentation for the Revit .Net Assemblies | 
+          <a href="https://github.com/symonkipkemei/revit-dependency-scanner" target="_blank" rel="noopener noreferrer" className="hover:text-gray-800 ml-1">Open source</a>
+        </p>
       </div>
     </div>
   )
