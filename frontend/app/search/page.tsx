@@ -143,28 +143,29 @@ export default function SearchPage() {
       {/* Top Bar */}
       <div style={{ backgroundColor: 'rgb(40, 40, 42)' }}>
         {/* Combined Home Icon and Version Tabs */}
-        <div className="flex items-center" style={{ backgroundColor: 'rgb(40, 40, 42)' }}>
-          <div className="flex flex-1">
+        <div className="flex items-center overflow-x-auto" style={{ backgroundColor: 'rgb(40, 40, 42)' }}>
+          <div className="flex flex-1 min-w-0">
             <button 
               onClick={handleBackToHome}
-              className="hover:opacity-70 transition-opacity px-6 py-2 text-white flex items-center"
+              className="hover:opacity-70 transition-opacity px-3 sm:px-6 py-2 text-white flex items-center flex-shrink-0"
               title="Back to Home"
             >
               <img 
                 src="/icons/ICON-Grey.png" 
                 alt="Home" 
-                className="w-8 h-8"
+                className="w-6 h-6 sm:w-8 sm:h-8"
               />
             </button>
-            {['2021', '2022', '2023', '2024', '2025', '2026'].map((version) => (
-              <button
-                key={version}
-                onClick={() => setSelectedVersion(version)}
-                className={`px-6 py-2 text-base font-semibold transition-colors relative ${
-                  selectedVersion === version
-                    ? 'bg-black border-b-4 border-white'
-                    : 'hover:bg-gray-600'
-                }`}
+            <div className="flex overflow-x-auto">
+              {['2021', '2022', '2023', '2024', '2025', '2026'].map((version) => (
+                <button
+                  key={version}
+                  onClick={() => setSelectedVersion(version)}
+                  className={`px-3 sm:px-6 py-2 text-sm sm:text-base font-semibold transition-colors relative whitespace-nowrap ${
+                    selectedVersion === version
+                      ? 'bg-black border-b-4 border-white'
+                      : 'hover:bg-gray-600'
+                  }`}
                 style={{ 
                   fontFamily: 'Quan Light, sans-serif',
                   color: selectedVersion === version ? 'white' : 'rgb(196, 196, 198)'
@@ -172,14 +173,15 @@ export default function SearchPage() {
               >
                 Revit {version}
               </button>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
         {/* Sidebar */}
-        <div className="bg-white border-r border-gray-200 flex flex-col overflow-y-auto scrollbar-custom">
+        <div className="bg-white border-r border-gray-200 flex flex-col overflow-y-auto scrollbar-custom w-full lg:w-80 xl:w-96">
           <div className="sticky top-0 bg-white z-10 p-4">
             <SearchBar 
               onSearch={handleSearch}
@@ -209,7 +211,7 @@ export default function SearchPage() {
 
       {/* Footer */}
       <div className="bg-gray-100 border-t border-gray-200 px-4 py-2 text-center">
-        <p className="text-sm text-gray-600" style={{ fontFamily: 'Quan Light, sans-serif' }}>
+        <p className="text-xs sm:text-sm text-gray-600" style={{ fontFamily: 'Quan Light, sans-serif' }}>
           Documentation for the Revit .Net Assemblies | 
           <a href="https://github.com/symonkipkemei/revit-dependency-scanner" target="_blank" rel="noopener noreferrer" className="hover:text-gray-800 ml-1">Open source</a>
         </p>

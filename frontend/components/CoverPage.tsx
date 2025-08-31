@@ -10,31 +10,31 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <div className="h-screen bg-white flex items-center justify-center p-8">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4 sm:p-8">
       <div className="max-w-4xl mx-auto text-center" style={{ fontFamily: 'Quan Light, sans-serif' }}>
         {/* Hero Section */}
-        <div className="flex items-start gap-8">
-          <div className="flex-shrink-0 h-full flex items-stretch">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-8">
+          <div className="flex-shrink-0 order-1 lg:order-none">
             <img 
               src="/icons/ICON-Black.png" 
               alt="Revit Dependency Scanner" 
-              className="w-72 h-auto md:w-96 object-contain animate-spin"
+              className="w-32 h-auto sm:w-48 md:w-64 lg:w-72 xl:w-96 object-contain animate-spin"
               style={{ animationDuration: '10s' }}
             />
           </div>
-          <div className="flex-1 text-left">
-            <h1 className="text-6xl md:text-7xl text-black leading-tight mb-6" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
+          <div className="flex-1 text-center lg:text-left order-2 lg:order-none">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-black leading-tight mb-4 lg:mb-6" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
               Revit Dependency Scanner
             </h1>
-            <p className="text-2xl md:text-3xl text-gray-700 mb-4 leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-700 mb-4 leading-relaxed">
               Find compatible package versions<br />
               across Revit versions.
             </p>
-            <p className="text-2xl md:text-3xl text-black font-medium mb-8">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-black font-medium mb-6 lg:mb-8">
               Avoid dependency hell.
             </p>
             
-            <div className="flex flex-wrap gap-6 text-lg text-gray-700 mb-8">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4 lg:gap-6 text-sm sm:text-base lg:text-lg text-gray-700 mb-6 lg:mb-8">
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 bg-black rounded-full"></div>
                 <span>Revit 2021-2024</span>
