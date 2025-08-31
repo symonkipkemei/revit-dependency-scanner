@@ -126,7 +126,7 @@ export default function SearchBar({ onSearch, searchResults, onSelectResult, que
                       {result.item.type || 'unknown'}
                     </span>
                   </div>
-                  <div className="text-base text-gray-700 truncate font-semibold" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
+                  <div className="text-base text-gray-500 truncate font-light" style={{ fontFamily: 'Quan Light, sans-serif' }}>
                     {result.item.fullName || result.item.assemblyName || result.item.name}
                   </div>
                   {result.item.description && (
