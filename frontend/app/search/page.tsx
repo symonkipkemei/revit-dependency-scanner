@@ -105,24 +105,24 @@ export default function SearchPage() {
     <div className="flex flex-col h-screen bg-gray-50">
       {/* Top Bar */}
       <div className="bg-white border-b border-gray-200 p-4">
-        {/* Version Tabs with Home Icon */}
-        <div className="flex items-center space-x-3">
+        {/* Combined Home Icon and Version Tabs */}
+        <div className="flex items-center bg-black p-1 rounded-lg">
           <button 
             onClick={handleBackToHome}
-            className="text-2xl hover:opacity-70 transition-opacity"
+            className="text-2xl hover:opacity-70 transition-opacity px-3 py-2 text-white"
             title="Back to Home"
           >
             🏗️
           </button>
-          <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg flex-1">
+          <div className="flex space-x-1 flex-1">
             {['2021', '2022', '2023', '2024', '2025', '2026'].map((version) => (
               <button
                 key={version}
                 onClick={() => setSelectedVersion(version)}
                 className={`px-4 py-2 rounded-md text-base font-semibold transition-colors ${
                   selectedVersion === version
-                    ? 'bg-white text-gray-900 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    ? 'bg-white text-black shadow-sm'
+                    : 'text-white hover:text-gray-200 hover:bg-gray-800'
                 }`}
                 style={{ fontFamily: 'Quan Light, sans-serif' }}
               >
