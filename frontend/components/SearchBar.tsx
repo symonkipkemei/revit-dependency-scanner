@@ -76,19 +76,29 @@ export default function SearchBar({ onSearch, searchResults, onSelectResult, que
   return (
     <div className="relative">
       <div className="relative">
-        <input
-          ref={inputRef}
-          type="text"
-          placeholder="Search dependencies (e.g., Newtonsoft.Json, AWS, Revit 2024)..."
-          value={query}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          className="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-        />
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+        <div className="flex">
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Scan Revit .NET Packages"
+            style={{ fontFamily: 'Quan Light, sans-serif' }}
+            className="flex-1 px-3 py-2 border border-gray-300 focus:ring-1 focus:ring-gray-400 focus:border-gray-400 text-base"
+            value={query}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+          />
+          <button
+            type="button"
+            className="px-3 py-2 text-white border focus:ring-1 focus:ring-gray-400 focus:outline-none"
+            style={{ 
+              backgroundColor: 'rgb(40, 40, 42)', 
+              borderColor: 'rgb(40, 40, 42)' 
+            }}
+          >
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
         </div>
       </div>
 
@@ -109,18 +119,18 @@ export default function SearchBar({ onSearch, searchResults, onSelectResult, que
                 <span className="text-lg">{getTypeIcon(result.item.type || 'unknown')}</span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center space-x-2">
-                    <span className="font-medium text-gray-900 truncate">
+                    <span className="font-bold text-gray-900 truncate text-base" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
                       {result.item.name}
                     </span>
                     <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
                       {result.item.type || 'unknown'}
                     </span>
                   </div>
-                  <div className="text-sm text-gray-500 truncate">
+                  <div className="text-base text-gray-500 truncate font-light" style={{ fontFamily: 'Quan Light, sans-serif' }}>
                     {result.item.fullName || result.item.assemblyName || result.item.name}
                   </div>
                   {result.item.description && (
-                    <div className="text-xs text-gray-400 mt-1 line-clamp-2">
+                    <div className="text-xs text-gray-600 mt-1 line-clamp-2 font-medium" style={{ fontFamily: 'Quan Light, sans-serif' }}>
                       {result.item.description}
                     </div>
                   )}

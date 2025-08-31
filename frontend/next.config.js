@@ -2,8 +2,8 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
-  basePath: '/revit-dependency-scanner',
-  assetPrefix: '/revit-dependency-scanner',
+  basePath: process.env.NODE_ENV === 'production' ? '/revit-dependency-scanner' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/revit-dependency-scanner' : '',
   images: {
     unoptimized: true
   }

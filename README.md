@@ -13,6 +13,8 @@ The Revit Dependency Scanner consists of two main components:
 
 - **Multi-Version Support**: Analyze dependencies across Revit 2021-2026
 - **Smart Search**: Fast search functionality with FlexSearch integration
+- **Mobile-Responsive Design**: Collapsible navigation for optimal mobile experience
+- **Interactive UI**: Modern interface with gradient accents and smooth animations
 - **Detailed Assembly Information**: View complete assembly metadata including:
   - Assembly identity and versioning
   - Strong naming status
@@ -20,7 +22,7 @@ The Revit Dependency Scanner consists of two main components:
   - NuGet package information
   - Binding redirect suggestions
 - **Compatibility Analysis**: Identify potential version conflicts and compatibility issues
-- **Modern UI**: Clean, responsive interface built with Next.js and Tailwind CSS
+- **Robust Error Handling**: Graceful handling of missing or undefined assembly data
 
 ## 🏃‍♂️ Quick Start
 
@@ -92,6 +94,8 @@ The application loads assembly metadata from JSON files in the `public/` directo
 - **Multi-field Search**: Search across assembly names, descriptions, and metadata
 - **Version Filtering**: Results are automatically filtered by selected Revit version
 - **Keyboard Navigation**: Full keyboard support with arrow keys and Enter
+- **Error-Resilient**: Handles undefined properties and missing data gracefully
+- **Mobile-Optimized**: Collapsible sidebar for better mobile search experience
 
 ### Assembly Analysis
 The application provides detailed analysis for each assembly:
@@ -106,10 +110,11 @@ The application provides detailed analysis for each assembly:
 
 ### Frontend
 - **Next.js 14**: React framework with App Router
-- **TypeScript**: Type-safe development
-- **Tailwind CSS**: Utility-first CSS framework
-- **FlexSearch**: Fast, memory-efficient search
+- **TypeScript**: Type-safe development with strict null checks
+- **Tailwind CSS**: Utility-first CSS framework with gradient support
+- **FlexSearch**: Fast, memory-efficient search with error handling
 - **React 18**: Modern React with hooks and concurrent features
+- **Responsive Design**: Mobile-first approach with collapsible navigation
 
 ### Development Tools
 - **ESLint**: Code linting
@@ -167,17 +172,22 @@ If you encounter issues or have questions:
 
 ## 🔮 Roadmap
 
+- [x] Mobile-responsive navigation with collapsible sidebar
+- [x] Enhanced UI with gradient accents and visual improvements
+- [x] Robust error handling for undefined assembly properties
 - [ ] Complete scanner component development
 - [ ] Add Revit 2025/2026 support
 - [ ] Implement conflict detection algorithms
 - [ ] Add export functionality for dependency reports
 - [ ] Integration with NuGet API for latest version checking
 - [ ] Support for custom assembly locations
+- [ ] Dark mode theme support
+- [ ] Advanced filtering and sorting options
 
 ---
 
 ## ⚖️ Legal Notice
 
-This tool extracts only assembly metadata (names, versions, public key tokens) from Revit installations for interoperability purposes. No proprietary code or resources are extracted or redistributed. Users must have valid Autodesk Revit licenses to use this tool.
+This tool extracts only assembly metadata (names, versions, public key tokens) from Revit installations for interoperability purposes. No proprietary code or resources are extracted or redistributed. 
 
 **Built with ❤️ for the Revit development community**
