@@ -104,9 +104,9 @@ export default function SearchPage() {
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       {/* Top Bar */}
-      <div className="bg-white border-b border-gray-200 p-4">
+      <div className="bg-black border-b border-gray-200">
         {/* Combined Home Icon and Version Tabs */}
-        <div className="flex items-center bg-black p-1 rounded-lg">
+        <div className="flex items-center bg-black p-1">
           <button 
             onClick={handleBackToHome}
             className="text-2xl hover:opacity-70 transition-opacity px-3 py-2 text-white"
