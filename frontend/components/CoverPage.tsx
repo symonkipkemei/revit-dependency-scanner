@@ -69,44 +69,6 @@ export default function CoverPage({ onEnterApp }: CoverPageProps) {
           </button>
         </div>
 
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
-            <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-6 mx-auto">
-              <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold text-black mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Smart Search</h3>
-            <p className="text-gray-700 leading-relaxed">
-              Fast search across assembly names, versions, and metadata with instant results
-            </p>
-          </div>
-
-          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
-            <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-6 mx-auto">
-              <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold text-black mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Version Analysis</h3>
-            <p className="text-gray-700 leading-relaxed">
-              Detailed compatibility analysis and binding redirect suggestions
-            </p>
-          </div>
-
-          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300">
-            <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-6 mx-auto">
-              <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold text-black mb-4" style={{ fontFamily: 'Quan Bold, sans-serif' }}>Multi-Version</h3>
-            <p className="text-gray-700 leading-relaxed">
-              Support for Revit 2021-2024 with real assembly metadata
-            </p>
-          </div>
-        </div>
 
       </div>
     </div>
