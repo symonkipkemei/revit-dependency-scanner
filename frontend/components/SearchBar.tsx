@@ -119,18 +119,18 @@ export default function SearchBar({ onSearch, searchResults, onSelectResult, que
                 <span className="text-lg">{getTypeIcon(result.item.type || 'unknown')}</span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center space-x-2">
-                    <span className="font-medium text-gray-900 truncate text-base" style={{ fontFamily: 'Quan Light, sans-serif' }}>
+                    <span className="font-bold text-gray-900 truncate text-base" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
                       {result.item.name}
                     </span>
                     <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
                       {result.item.type || 'unknown'}
                     </span>
                   </div>
-                  <div className="text-base text-gray-500 truncate" style={{ fontFamily: 'Quan Light, sans-serif' }}>
+                  <div className="text-base text-gray-700 truncate font-semibold" style={{ fontFamily: 'Quan Bold, sans-serif' }}>
                     {result.item.fullName || result.item.assemblyName || result.item.name}
                   </div>
                   {result.item.description && (
-                    <div className="text-xs text-gray-400 mt-1 line-clamp-2" style={{ fontFamily: 'Quan Light, sans-serif' }}>
+                    <div className="text-xs text-gray-600 mt-1 line-clamp-2 font-medium" style={{ fontFamily: 'Quan Light, sans-serif' }}>
                       {result.item.description}
                     </div>
                   )}
